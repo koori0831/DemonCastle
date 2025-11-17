@@ -26,7 +26,7 @@ namespace Work.Characters.Stats.Code
 
         private void SetStatDict(CharacterDataSO characterData)
         {
-            Dictionary<string, CharacterStat> statDict = characterData.GetStats();
+            Dictionary<string, CharacterStat> statDict = characterData.GetDefaultStats();
             if (statDict == null) return;
             stats = statDict;
         }

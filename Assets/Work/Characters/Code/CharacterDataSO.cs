@@ -11,10 +11,13 @@ namespace Work.Characters.Code
        
         [field: SerializeField] public string CharacterName;
         [field: SerializeField] public string CharacterDescription;
+        [field: SerializeField] public CharacterEnum CharacterType;
+        [field: SerializeField] public CharacterAttackTypeEnum AttackType;
+        [field: SerializeField] public ChracterAttackRangeTypeEnum AttackRangeType;
 
         [SerializeField] private List<StatOverride> stats;
 
-        public Dictionary<string, CharacterStat> GetStats()
+        public Dictionary<string, CharacterStat> GetDefaultStats()
         {
             Dictionary<string, CharacterStat> realStats = new Dictionary<string, CharacterStat>();
             foreach (StatOverride item in stats)
