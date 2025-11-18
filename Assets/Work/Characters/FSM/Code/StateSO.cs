@@ -1,7 +1,18 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StateSO", menuName = "Scriptable Objects/StateSO")]
-public class StateSO : ScriptableObject
+namespace Work.Characters.FSM.Code
 {
-    
+    [CreateAssetMenu(fileName = "StateData", menuName = "Characters/FSM/StateData")]
+    public class StateSO : ScriptableObject
+    {
+        public string stateName;
+        public string statePath;
+        public int animationHash { get; private set; }
+
+        private void OnValidate()
+        {
+            if (!string.IsNullOrEmpty(stateName))
+                animationHash = Animator.StringToHash(stateName);
+        }
+    }
 }

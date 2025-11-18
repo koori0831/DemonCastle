@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class State : MonoBehaviour
+namespace Work.Characters.FSM.Code
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class State
     {
-        
-    }
+        public virtual void Enter()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+        public virtual void Exit()
+        {
+        }
+
+        public virtual void Update()
+        {
+        }
     }
 }
