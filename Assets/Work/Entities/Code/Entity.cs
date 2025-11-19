@@ -2,18 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Work.Entities.Code;
 
 namespace Work.Entities
 {
     public class Entity : MonoBehaviour
     {
         #region Members 
+
         private Dictionary<Type, IEntityComponent> components = new();
+
+        public AbstractEntityDataSO EntityDataSO { get; private set; }
         #endregion
 
         #region Init
-        private void Awake()
+        protected void Init(AbstractEntityDataSO entityData)
         {
+            EntityDataSO = entityData;
+
             GetEntityComponents();
             InitializeCompo();
             AfterInitCompo();

@@ -12,8 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791693503907d8f4ca76d15221057526, type: 3}
   m_Name: TestCharacter
   m_EditorClassIdentifier: Assembly-CSharp::Work.Characters.Code.CharacterDataSO
-  CharacterName: "\uD14C\uC2A4\uD2B8 \uCE90\uB9AD\uD130"
-  CharacterDescription: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE90\uB9AD\uD130 \uB370\uC774\uD130 "
+  <CharacterName>k__BackingField: 
+  <CharacterDescription>k__BackingField: 
+  <CharacterType>k__BackingField: 0
+  <AttackType>k__BackingField: 0
+  <AttackRangeType>k__BackingField: 0
+  <AnimationData>k__BackingField:
+    AnimatorController: {fileID: 9100000, guid: f926e9f5e99ed4148a68a448e38053a8, type: 2}
+    visualPrefab: {fileID: 5840466451531727481, guid: 4f5c102e8eb01a9469e0350737387bd9, type: 3}
+  <stateSOs>k__BackingField:
+  - {fileID: 11400000, guid: 7984d751eebd9e545a712d05fcc0eac8, type: 2}
+  - {fileID: 11400000, guid: 6fcf96874b5799b4c97fa9724664cf78, type: 2}
   stats:
   - name: HP
     stat: {fileID: 11400000, guid: 122e3468ab5a7a74cb4ac27e0113d072, type: 2}
