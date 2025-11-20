@@ -18,8 +18,8 @@ namespace Work.Characters.Code
         private DetectSensorCompo _sensor;
         private Rigidbody _rbCompo;
         private Vector3 _direction; //움직일 방향
-        private float _speed; //속도
-        
+        [SerializeField] private float _speed; //속도 -> 나중에 캐릭터 데이터에서 받아오도록 변경 필요
+
         public Entity Owner { get; private set; }
         public bool IsCanMove { get; set; } = true;
         public bool IsExistTarget => _sensor == null ? false : _sensor.CurrentTarget != null;
@@ -78,7 +78,7 @@ namespace Work.Characters.Code
         {
             if (!IsCanMove) return;
 
-            Vector3 moveVector = _direction * _speed * Time.deltaTime;
+            Vector3 moveVector = _direction * _speed;
             _rbCompo.linearVelocity = moveVector;
         }
         #endregion 

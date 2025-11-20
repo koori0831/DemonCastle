@@ -8,6 +8,12 @@ namespace Work.Characters.Code.Test
         [SerializeField] private CharacterDataContainer characterDataContainer;
         [SerializeField] private GameObject characterPrefab;
 
+        public void Start()
+        {
+            TestFunc();
+            CharacterCreateTestFunc();
+        }
+
         [ContextMenu("Test Character Data Set")]
         public void TestFunc()
         {
