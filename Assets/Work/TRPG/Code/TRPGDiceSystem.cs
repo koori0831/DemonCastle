@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Work.TRPG.Code
 {
-    // 판정 결과를 담을 구조체
     [System.Serializable]
     public struct CheckInfo
     {
