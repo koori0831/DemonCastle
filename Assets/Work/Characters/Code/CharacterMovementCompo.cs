@@ -54,6 +54,7 @@ namespace Work.Characters.Code
         #region Method
 
         public void SetCanMove(bool isCan) => IsCanMove = isCan;
+        public void SetDirection(Vector3 dir) => _direction = dir;
 
         private void Rotate()
         {
