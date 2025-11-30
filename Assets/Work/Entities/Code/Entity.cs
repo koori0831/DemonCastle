@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Work.Characters.Stats.Code;
 using Work.Entities.Code;
 
 namespace Work.Entities
@@ -11,14 +12,16 @@ namespace Work.Entities
         #region Members 
 
         private Dictionary<Type, IEntityComponent> components = new();
-
+        public StatContainer StatContainer { get; private set; }
         public AbstractEntityDataSO EntityDataSO { get; private set; }
         #endregion
 
         #region Init
-        protected void Init(AbstractEntityDataSO entityData)
+        public void Init(AbstractEntityDataSO entityData)
         {
             EntityDataSO = entityData;
+            StatContainer = new StatContainer();
+            StatContainer.InitailizeStatContainer(EntityDataSO);
 
             GetEntityComponents();
             InitializeCompo();

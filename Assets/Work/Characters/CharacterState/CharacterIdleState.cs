@@ -4,6 +4,8 @@ using UnityEngine;
 using Work.Characters.Code;
 using Work.Characters.FSM.Code;
 using Work.Entities;
+using Work.Utils.EventBus;
+using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
@@ -25,18 +27,18 @@ namespace Work.Characters.CharacterState
             base.Enter();
             Debug.Log("Idle 진입");
             _movementCompo.SetCanMove(false);
-            _character.CharacterDataContainer.OnMoveDirectionChanged += HandleMoveDirectionChanged;
+            Bus<PlayerMoveEvent>.Events += HandleMoveDirectionChanged;
         }
 
         public override void Exit()
         {
             base.Exit();
-            _character.CharacterDataContainer.OnMoveDirectionChanged -= HandleMoveDirectionChanged;
+            Bus<PlayerMoveEvent>.Events -= HandleMoveDirectionChanged;
         }
 
-        private void HandleMoveDirectionChanged()
+        private void HandleMoveDirectionChanged(PlayerMoveEvent evt)
         {
-            if (_character.CharacterDataContainer.MoveDirection != Vector3.zero)
+            if (evt.MoveDirection != Vector3.zero)
             {
                 _stateCompo.ChangeState("MOVE");
             }

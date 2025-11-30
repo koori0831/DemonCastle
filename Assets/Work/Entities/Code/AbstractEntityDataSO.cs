@@ -24,12 +24,12 @@ namespace Work.Entities.Code
 
         [SerializeField] private List<StatOverride> stats;
 
-        public Dictionary<string, CharacterStat> GetDefaultStats()
+        public Dictionary<string, Stat> GetDefaultStats()
         {
-            Dictionary<string, CharacterStat> realStats = new Dictionary<string, CharacterStat>();
+            Dictionary<string, Stat> realStats = new Dictionary<string, Stat>();
             foreach (StatOverride item in stats)
             {
-                CharacterStat stat = item.CreateStat();
+                Stat stat = item.CreateStat();
                 realStats.Add(stat.StatContext.StatName, stat);
             }
 

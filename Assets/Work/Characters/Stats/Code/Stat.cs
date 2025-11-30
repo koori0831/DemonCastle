@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Work.Characters.Stats.Code
 {
-    public class CharacterStat
+    public class Stat
     {
         #region Member
 
@@ -30,7 +30,7 @@ namespace Work.Characters.Stats.Code
         #endregion
 
         #region Constructor and Destructor
-        public CharacterStat(StatContext statContext)
+        public Stat(StatContext statContext)
         {
             StatContext = statContext;
             _value = StatContext.BaseValue;
@@ -38,7 +38,7 @@ namespace Work.Characters.Stats.Code
             _wrappers = new Dictionary<Action<float, float>, StatValueChangedEvent>();
         }
 
-        ~CharacterStat()
+        ~Stat()
         {
             RemoveAllListenerValueChanged();
         }

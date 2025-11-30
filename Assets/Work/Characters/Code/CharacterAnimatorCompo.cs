@@ -17,6 +17,8 @@ namespace Work.Characters.Code
             {
                 animator.runtimeAnimatorController = _character.CharacterData.AnimationData.AnimatorController as RuntimeAnimatorController;
                 GameObject visual = Instantiate(_character.CharacterData.AnimationData.visualPrefab,transform);
+
+                animator.Rebind();
             }
 
 
