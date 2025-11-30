@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Work.Characters.Code.Test
@@ -7,6 +8,7 @@ namespace Work.Characters.Code.Test
         [SerializeField] private CharacterDataSO characterDataSO;
         [SerializeField] private CharacterDataContainer characterDataContainer;
         [SerializeField] private GameObject characterPrefab;
+        [SerializeField] private CinemachineCamera playerFollowCam;
 
         public void Start()
         {
@@ -24,7 +26,9 @@ namespace Work.Characters.Code.Test
         public void CharacterCreateTestFunc()
         {
             Character character = Instantiate(characterPrefab).GetComponent<Character>();
-            character.Initialized(characterDataContainer);
+            character.Init(characterDataSO);
+
+            playerFollowCam.Target.TrackingTarget = character.transform;
         }
     }
 }
