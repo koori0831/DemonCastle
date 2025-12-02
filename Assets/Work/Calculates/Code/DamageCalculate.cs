@@ -24,7 +24,8 @@ namespace Work.Calculates.Code
         public float CalculateDamage(AttackTypeEnum attackType,float damage)
         {
             if (_dectectSensor.CurrentTarget != null) return damage;
-            StatContainer targetStat = _dectectSensor.CurrentTarget.StatContainer;
+            Entity target = _dectectSensor.CurrentTarget.Transform.GetComponent<Entity>();
+            StatContainer targetStat = target.StatContainer;
 
             Stat defenceStat = targetStat.GetDefenceStatForAttackType(attackType);
             Stat attackStat = _statContainer.GetAttackStatForAttackType(attackType);
