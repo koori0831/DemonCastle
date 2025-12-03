@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d727d151b5a2c2847b0c26f3202ee662, type: 3}
+  m_Name: TestDialogueContainer
+  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Dialogue.DialogueContainerSO
+  startNodeGuid: 23b50c2ee50c4f5a889acb0549d215d6
+  nodeLinks:
+  - baseNodeGuid: 23b50c2ee50c4f5a889acb0549d215d6
+    targetNodeGuid: db1598a53939463893d4f483bb5d8951
+    portName: Next
+  - baseNodeGuid: db1598a53939463893d4f483bb5d8951
+    targetNodeGuid: 1b45de2a17a5400087da3fb26fdd77dc
+    portName: Next
+  nodeDataList:
+  - rid: 7499065194567434351
+  - rid: 7499065194567434352
+  - rid: 7499065194567434353
+  references:
+    version: 2
+    RefIds:
+    - rid: 7499065194567434351
+      type: {class: StartNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 23b50c2ee50c4f5a889acb0549d215d6
+        position: {x: 617, y: 132}
+        nodeType: 1
+    - rid: 7499065194567434352
+      type: {class: DialogueNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: db1598a53939463893d4f483bb5d8951
+        position: {x: 724, y: 132}
+        nodeType: 2
+        speakerId: 
+        textKey: 
+    - rid: 7499065194567434353
+      type: {class: EndNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 1b45de2a17a5400087da3fb26fdd77dc
+        position: {x: 905, y: 132}
+        nodeType: 5
