@@ -13,7 +13,7 @@ namespace Work.Characters.CharacterState
         private StateCompo _stateCompo;
         private CharacterMovementCompo _movementCompo;
 
-        public CharacterMoveState(Entity entity, EntityAnimatorCompo animator, int animHash) : base(entity, animator, animHash)
+        public CharacterMoveState(Entity entity, int animHash) : base(entity, animHash)
         {
             _character = entity as Character;
             _stateCompo = _character.GetCompo<StateCompo>();

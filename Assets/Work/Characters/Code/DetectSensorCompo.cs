@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Work.Combat;
 using Work.Entities;
 using Work.Entities.Code;
+using Work.Utils.EventBus;
+using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.Code
 {
@@ -11,7 +14,12 @@ namespace Work.Characters.Code
 
         public Entity Owner { get; private set; }
         public IDamageable CurrentTarget { get; private set; } //나중에 다른걸로 바뀔 가능성 있음 , 타겟이 존재하는지와 같은 검사는 모두 얘를 통해서 이루어짐
+        public bool IsExistTarget => CurrentTarget != null;
 
+        public delegate void OnTargetChange(IDamageable currentTarget, IDamageable prev);
+        public event OnTargetChange OnTargetChangedEvent;
+
+        private List<IDamageable> _inRangeTarget = new List<IDamageable>();
         private SphereCollider _area;
         private float _detectionRadius = 5f;
 
@@ -25,16 +33,85 @@ namespace Work.Characters.Code
 
             decal.SetRadiuse(_detectionRadius);
             decal.SetActiveDecal(true);
+
+            Bus<PlayerMoveEvent>.Events += HandleMoveEvent;
+        }
+
+        private void HandleMoveEvent(PlayerMoveEvent evt)
+        {
+            SetTarget();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            
+            if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                if (!_inRangeTarget.Contains(damageable))
+                {
+                    _inRangeTarget.Add(damageable);
+
+                    SetTarget();
+                }
+            }
+        }
+
+        private void SetTarget()
+        {
+            if (_inRangeTarget.Count == 0 && CurrentTarget == null) return;
+
+            IDamageable prev = CurrentTarget;
+
+            if (_inRangeTarget.Count == 0)
+            {
+                CurrentTarget = null;
+            }
+
+            RefreshTargets();
+
+            for (int i = 0; i < _inRangeTarget.Count; i++)
+            {
+                if (CurrentTarget == null)
+                {
+                    CurrentTarget = _inRangeTarget[i];
+                    continue;
+                }
+
+                bool isRangeOut = Vector3.Distance(CurrentTarget.Transform.position, Owner.Transform.position) > _detectionRadius - 1f;
+                bool isNear = Vector3.Distance(CurrentTarget.Transform.position, Owner.Transform.position) > Vector3.Distance(_inRangeTarget[i].Transform.position, Owner.Transform.position);
+
+                if (isRangeOut && isNear)
+                {
+                    CurrentTarget = _inRangeTarget[i];
+                }
+            }
+
+            if (prev != CurrentTarget)
+                OnTargetChangedEvent?.Invoke(CurrentTarget, prev);
+        }
+
+        private void RefreshTargets()
+        {
+            int cnt = _inRangeTarget.Count;
+            for (int i = cnt - 1; i >= 0; i--)
+            {
+                if (_inRangeTarget[i] == null || _inRangeTarget[i].Transform == null || _inRangeTarget[i].Transform.gameObject == null)
+                {
+                    _inRangeTarget.RemoveAt(i);
+                }
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            
+            if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                if (_inRangeTarget.Contains(damageable))
+                {
+                    _inRangeTarget.Remove(damageable);
+
+                    SetTarget();
+                }
+            }
         }
     }
 }

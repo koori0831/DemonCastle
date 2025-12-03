@@ -27,7 +27,7 @@ namespace Work.Characters.FSM.Code
             {
                 Type type = Type.GetType(item.statePath);
                 Debug.Assert(type != null, $"Type '{item.statePath}' not found.");
-                State stateInstance = (State)Activator.CreateInstance(type, entity, entity.GetCompo<EntityAnimatorCompo>(true),item.animationHash);
+                State stateInstance = (State)Activator.CreateInstance(type, entity,item.animationHash);
                 states.Add(item.stateName, stateInstance);
             }
 

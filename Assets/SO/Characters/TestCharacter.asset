@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: 
   <Description>k__BackingField: 
   <AttackRange>k__BackingField: 5
-  <AttackRangeType>k__BackingField: 0
+  <AttackRangeType>k__BackingField: 2
   <AnimationData>k__BackingField:
     AnimatorController: {fileID: 9100000, guid: f926e9f5e99ed4148a68a448e38053a8, type: 2}
     visualPrefab: {fileID: 5840466451531727481, guid: 4f5c102e8eb01a9469e0350737387bd9, type: 3}
@@ -28,3 +28,8 @@ MonoBehaviour:
   <stateSOs>k__BackingField:
   - {fileID: 11400000, guid: 7984d751eebd9e545a712d05fcc0eac8, type: 2}
   - {fileID: 11400000, guid: 6fcf96874b5799b4c97fa9724664cf78, type: 2}
+  - {fileID: 11400000, guid: 6186fe874c8c2f347b8f666e1b348632, type: 2}
+  <attackDatas>k__BackingField:
+  - {fileID: 11400000, guid: 7fbf325d84defb3448c4b9923187b26f, type: 2}
+  - {fileID: 11400000, guid: dad309b793a75974aa14ac2b8630dc1e, type: 2}
+  - {fileID: 11400000, guid: d29fe3a2a3a20cb459da5705b7c2fb1b, type: 2}

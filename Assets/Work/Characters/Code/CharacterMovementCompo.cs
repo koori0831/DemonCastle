@@ -22,7 +22,7 @@ namespace Work.Characters.Code
 
         public Entity Owner { get; private set; }
         public bool IsCanMove { get; set; } = true;
-        public bool IsExistTarget => _sensor == null ? false : _sensor.CurrentTarget != null;
+        public bool IsExistTarget => _sensor == null ? false : _sensor.IsExistTarget;
         public Transform TargetTransform => _sensor == null ? null : _sensor.CurrentTarget.Transform;
 
         #endregion
@@ -78,7 +78,16 @@ namespace Work.Characters.Code
         {
             Vector3 moveVector = _direction * _speed;
             if (!IsCanMove)
+            {
                 moveVector = Vector3.zero;
+                _rbCompo.freezeRotation = false;
+            }
+            else
+            {
+                _rbCompo.freezeRotation = true;
+            }
+
+            //moveVector.y += -9.8f;
 
             _rbCompo.linearVelocity = moveVector;
         }

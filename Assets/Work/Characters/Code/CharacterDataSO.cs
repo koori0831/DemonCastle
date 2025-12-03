@@ -4,6 +4,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using Work.Characters.FSM.Code;
 using Work.Characters.Stats.Code;
+using Work.Combat;
 using Work.Entities.Code;
 
 namespace Work.Characters.Code
@@ -16,5 +17,6 @@ namespace Work.Characters.Code
         //스킬 , 고유경험등 이것저것 추가예정
         [field: SerializeField] public CharacterEnum CharacterType { get; private set; }
         [field: SerializeField] public List<StateSO> stateSOs { get; private set; }
+        [field: SerializeField] public AttackDataSO[] attackDatas { get; private set; } 
     }
 }

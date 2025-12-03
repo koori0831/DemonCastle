@@ -28,9 +28,9 @@ namespace Work.Characters.FSM.Code
 
         #region Method
 
-        public void ChangeState(string newState)
+        public void ChangeState(string newState, bool isForcing = false)
         {
-            _stateMachine.ChangeState(newState);
+            _stateMachine.ChangeState(newState, isForcing);
         }
 
         #endregion
