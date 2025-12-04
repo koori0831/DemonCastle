@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,6 +10,10 @@ namespace Work.TRPG.Dialogue.Editor
         private DialogueGraphView _graphView;
         private DialogueContainerSO _activeContainer;
         private ObjectField _containerField;
+        private VisualElement _tableSettingsContainer;
+        private PropertyField _mainTableField;
+        private PropertyField _relatedTablesField;
+        private SerializedObject _containerSerializedObject;
 
         [MenuItem("TRPG/Dialogue Editor")]
         public static void Open()
@@ -47,7 +51,10 @@ namespace Work.TRPG.Dialogue.Editor
 
         private void GenerateToolbar()
         {
-            var toolbar = new Toolbar();
+            var toolbar = new Toolbar
+            {
+                name = "dialogue-editor-toolbar"
+            };
 
             _containerField = new ObjectField("Container")
             {
@@ -57,8 +64,7 @@ namespace Work.TRPG.Dialogue.Editor
             };
             _containerField.RegisterValueChangedCallback(evt =>
             {
-                _activeContainer = evt.newValue as DialogueContainerSO;
-                _graphView.PopulateFromContainer(_activeContainer);
+                SetActiveContainer(evt.newValue as DialogueContainerSO);
             });
             toolbar.Add(_containerField);
 
@@ -71,6 +77,93 @@ namespace Work.TRPG.Dialogue.Editor
             toolbar.Add(clearButton);
 
             rootVisualElement.Insert(0, toolbar);
+            CreateLocalizationControls();
+        }
+
+        private void CreateLocalizationControls()
+        {
+            if (_tableSettingsContainer != null)
+            {
+                rootVisualElement.Remove(_tableSettingsContainer);
+                _tableSettingsContainer = null;
+            }
+
+            var container = new VisualElement
+            {
+                name = "dialogue-table-settings"
+            };
+            container.style.flexDirection = FlexDirection.Column;
+            container.style.paddingLeft = 6f;
+            container.style.paddingRight = 6f;
+            container.style.paddingBottom = 4f;
+            container.style.paddingTop = 4f;
+            //container.style.rowGap = 2f;
+
+            var header = new Label("Localization Tables")
+            {
+                style =
+                {
+                    unityFontStyleAndWeight = FontStyle.Bold,
+                    marginBottom = 2f
+                }
+            };
+            container.Add(header);
+
+            _mainTableField = new PropertyField
+            {
+                label = "Main Table",
+                bindingPath = "mainTable"
+            };
+            container.Add(_mainTableField);
+
+            _relatedTablesField = new PropertyField
+            {
+                label = "Related Tables",
+                bindingPath = "relatedTables"
+            };
+            container.Add(_relatedTablesField);
+
+            _tableSettingsContainer = container;
+            rootVisualElement.Insert(1, container);
+
+            UpdateContainerBindings();
+        }
+
+        private void SetActiveContainer(DialogueContainerSO container)
+        {
+            if (_activeContainer == container)
+            {
+                return;
+            }
+
+            _activeContainer = container;
+            UpdateContainerBindings();
+            _graphView.PopulateFromContainer(_activeContainer);
+        }
+
+        private void UpdateContainerBindings()
+        {
+            if (_mainTableField == null || _relatedTablesField == null)
+            {
+                return;
+            }
+
+            _mainTableField.Unbind();
+            _relatedTablesField.Unbind();
+            _containerSerializedObject = null;
+
+            bool hasContainer = _activeContainer != null;
+            _mainTableField.SetEnabled(hasContainer);
+            _relatedTablesField.SetEnabled(hasContainer);
+
+            if (!hasContainer)
+            {
+                return;
+            }
+
+            _containerSerializedObject = new SerializedObject(_activeContainer);
+            _mainTableField.Bind(_containerSerializedObject);
+            _relatedTablesField.Bind(_containerSerializedObject);
         }
 
         private void SaveData()
@@ -106,3 +199,4 @@ namespace Work.TRPG.Dialogue.Editor
         }
     }
 }
+

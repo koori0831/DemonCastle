@@ -21,19 +21,21 @@ MonoBehaviour:
     targetNodeGuid: 1b45de2a17a5400087da3fb26fdd77dc
     portName: Next
   nodeDataList:
-  - rid: 7499065194567434351
-  - rid: 7499065194567434352
-  - rid: 7499065194567434353
+  - rid: 7499065224500346985
+  - rid: 7499065224500346986
+  - rid: 7499065224500346987
+  mainTable: {fileID: 11400000, guid: 4dfc9793def5a6243a54f9d00909483e, type: 2}
+  relatedTables: []
   references:
     version: 2
     RefIds:
-    - rid: 7499065194567434351
+    - rid: 7499065224500346985
       type: {class: StartNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
       data:
         guid: 23b50c2ee50c4f5a889acb0549d215d6
         position: {x: 617, y: 132}
         nodeType: 1
-    - rid: 7499065194567434352
+    - rid: 7499065224500346986
       type: {class: DialogueNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
       data:
         guid: db1598a53939463893d4f483bb5d8951
@@ -41,7 +43,7 @@ MonoBehaviour:
         nodeType: 2
         speakerId: 
         textKey: 
-    - rid: 7499065194567434353
+    - rid: 7499065224500346987
       type: {class: EndNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
       data:
         guid: 1b45de2a17a5400087da3fb26fdd77dc

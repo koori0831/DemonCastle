@@ -1,5 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEditor.Localization;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Work.TRPG.Dialogue
 {
@@ -10,9 +12,15 @@ namespace Work.TRPG.Dialogue
         [SerializeField] private List<NodeLinkData> nodeLinks = new List<NodeLinkData>();
         [SerializeReference] private List<NodeData> nodeDataList = new List<NodeData>();
 
+        [SerializeField] private StringTableCollection mainTable;
+        [SerializeField] private List<StringTableCollection> relatedTables = new List<StringTableCollection>();
+
         public string StartNodeGuid => startNodeGuid;
         public IReadOnlyList<NodeLinkData> NodeLinks => nodeLinks;
         public IReadOnlyList<NodeData> NodeDataList => nodeDataList;
+
+        public StringTableCollection MainTable => mainTable;
+        public IReadOnlyList<StringTableCollection> RelatedTables => relatedTables;
 
         public void SetStartNode(string guid)
         {
@@ -40,6 +48,21 @@ namespace Work.TRPG.Dialogue
             }
 
             nodeLinks.AddRange(links);
+        }
+
+        public void SetMainTable(StringTableCollection table)
+        {
+            mainTable = table;
+        }
+
+        public void SetRelatedTables(IEnumerable<StringTableCollection> tables)
+        {
+            relatedTables.Clear();
+            if (tables == null)
+            {
+                return;
+            }
+            relatedTables.AddRange(tables);
         }
 
         public void AddNode(NodeData node)
@@ -77,6 +100,24 @@ namespace Work.TRPG.Dialogue
                 link.PortName == linkData.PortName);
 
             nodeLinks.Add(linkData);
+        }
+
+        public void AddRelatedTable(StringTableCollection table)
+        {
+            if (table == null || relatedTables.Contains(table))
+            {
+                return;
+            }
+            relatedTables.Add(table);
+        }
+
+        public void RemoveRelatedTable(StringTableCollection table)
+        {
+            if (table == null)
+            {
+                return;
+            }
+            relatedTables.Remove(table);
         }
 
         public bool TryGetNode(string guid, out NodeData node)
