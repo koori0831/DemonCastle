@@ -18,12 +18,16 @@ namespace Work.Characters.Code
         private DetectSensorCompo _sensor;
         private Rigidbody _rbCompo;
         private Vector3 _direction; //움직일 방향
-        [SerializeField] private float _speed; //속도 -> 나중에 캐릭터 데이터에서 받아오도록 변경 필요
+        private float _c = 1f;
+        [SerializeField] private float _defaultSpeed = 5; //속도 -> 나중에 캐릭터 데이터에서 받아오도록 변경 필요
+        
 
         public Entity Owner { get; private set; }
+        public Transform TargetTransform => _sensor == null ? null : _sensor.CurrentTarget.Transform;
         public bool IsCanMove { get; set; } = true;
         public bool IsExistTarget => _sensor == null ? false : _sensor.IsExistTarget;
-        public Transform TargetTransform => _sensor == null ? null : _sensor.CurrentTarget.Transform;
+        public float CurrentSpeed { get; private set; }
+        public float CurrentSpeedMultiplier { get; private set; } = 1f;
 
         #endregion
 
@@ -37,7 +41,12 @@ namespace Work.Characters.Code
             _character = Owner as Character;
             _sensor = _character.GetCompo<DetectSensorCompo>();
             _rbCompo = _character.GetComponent<Rigidbody>();
+
+            CurrentSpeed = _defaultSpeed *( Owner.StatContainer.GetStatValue("DEX") / 20f) * _c;
+            Owner.StatContainer.AddListenerValueChangedEvent(HandleSpeedStatValueChangedEvent, "DEX");
         }
+
+      
 
         #endregion
 
@@ -76,7 +85,7 @@ namespace Work.Characters.Code
 
         private void Move()
         {
-            Vector3 moveVector = _direction * _speed;
+            Vector3 moveVector = _direction * CurrentSpeed * CurrentSpeedMultiplier;
             if (!IsCanMove)
             {
                 moveVector = Vector3.zero;
@@ -91,6 +100,14 @@ namespace Work.Characters.Code
 
             _rbCompo.linearVelocity = moveVector;
         }
+
+        public void SetMultiplier(float value = 1f) => CurrentSpeedMultiplier = value;
+
+        private void HandleSpeedStatValueChangedEvent(float prevValue, float changeValue)
+        {
+            CurrentSpeed = _defaultSpeed *( changeValue / 20f) * _c;
+        }
+
         #endregion 
     }
 }

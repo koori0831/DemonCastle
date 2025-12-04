@@ -24,6 +24,10 @@ MonoBehaviour:
     stat: {fileID: 11400000, guid: 122e3468ab5a7a74cb4ac27e0113d072, type: 2}
     isOverrid: 1
     overridValue: 25
+  - name: DEX
+    stat: {fileID: 11400000, guid: 0cd3c8a2a187a144485d6f5109d933bd, type: 2}
+    isOverrid: 1
+    overridValue: 20
   <CharacterType>k__BackingField: 0
   <stateSOs>k__BackingField:
   - {fileID: 11400000, guid: 7984d751eebd9e545a712d05fcc0eac8, type: 2}

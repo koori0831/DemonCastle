@@ -7,39 +7,19 @@ using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
-    public class CharacterMoveState : State
+    public class CharacterMoveState : CharacterCanMoveState
     {
-        private Character _character;
-        private StateCompo _stateCompo;
-        private CharacterMovementCompo _movementCompo;
 
         public CharacterMoveState(Entity entity, int animHash) : base(entity, animHash)
         {
-            _character = entity as Character;
-            _stateCompo = _character.GetCompo<StateCompo>();
-            _movementCompo = _character.GetCompo<CharacterMovementCompo>();
         }
 
-        public override void Enter()
+        protected override void MoveHandler(PlayerMoveEvent evt)
         {
-            base.Enter();
-            Debug.Log("Move 진입");
-            _movementCompo.SetCanMove(true);
-            Bus<PlayerMoveEvent>.Events += HandleMoveDirectionChanged;
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-            Bus<PlayerMoveEvent>.Events -= HandleMoveDirectionChanged;
-        }
-
-        private void HandleMoveDirectionChanged(PlayerMoveEvent evt)
-        {
-            _movementCompo.SetDirection(evt.MoveDirection);
-
-            if (evt.MoveDirection == Vector3.zero)
+            if(evt.MoveDirection == Vector3.zero)
+            {
                 _stateCompo.ChangeState("IDLE");
+            }
         }
     }
 }

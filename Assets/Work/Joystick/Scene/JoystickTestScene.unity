@@ -838,7 +838,6 @@ MonoBehaviour:
   joystickKnob: {fileID: 288124047}
   joystickParantImage: {fileID: 1556681565}
   joystickRange: 95
-  _movePos: {x: 0, y: 0, z: 0}
 --- !u!114 &858316730
 MonoBehaviour:
   m_ObjectHideFlags: 0

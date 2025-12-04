@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using Work.Characters.FSM.Code;
 using Work.Combat;
 using Work.Entities;
@@ -12,12 +10,18 @@ namespace Work.Characters.Code
     {
         public Entity Owner { get; private set; }
         public bool IsCanAttack { get; private set; }
+        public bool IsSoptAttack { get; private set; } = false;
+        public bool isAttacking;
 
-       
+
         private Character _character;
         private StateCompo _stateCompo;
         private AttackDataSO[] attackDatas;
         private DetectSensorCompo _sensorCompo;
+        private CharacterAnimatorCompo _animatorCompo;
+
+        private const float ATTACK_DELAY = 0.3f;
+        private float timer;
 
         private int _currentAttackCount;
         public int CurrentAttackCount { get { return _currentAttackCount; } }
@@ -29,37 +33,46 @@ namespace Work.Characters.Code
             _character = Owner as Character;
             _sensorCompo = _character.GetCompo<DetectSensorCompo>();
             _stateCompo = _character.GetCompo<StateCompo>();
+            _animatorCompo = _character.GetCompo<CharacterAnimatorCompo>(true);
             _sensorCompo.OnTargetChangedEvent += HandleTargetChangeEvent;
-            
+
             attackDatas = _character.CharacterData.attackDatas;
         }
 
-        private void HandleTargetChangeEvent(IDamageable currentTarget, IDamageable prev)
+        private void HandleTargetChangeEvent(IDamageable currentTarget, IDamageable prev)// 타겟이 바뀌면 알려주는 함수
         {
-            Debug.Log("HandleTargetChangeEvent");
-            IsCanAttack = _sensorCompo.IsExistTarget;
-            if (IsCanAttack)
+            IsCanAttack = currentTarget != null;
+            _currentAttackCount = 0;
+            if (IsSoptAttack || !IsCanAttack)
+                _stateCompo.ChangeState("MOVE", false);
+            Attack();
+        }
+
+        public void Attack()
+        {
+            if (IsCanAttack && !IsSoptAttack)
             {
-                _currentAttackCount = 0;
+                SetAttackComboAnim();
                 _stateCompo.ChangeState("ATTACK", true);
-                StopAllCoroutines();
-                StartCoroutine(AttackDelay());
+                _currentAttackCount = _currentAttackCount + 1 < attackDatas.Length ? _currentAttackCount + 1 : 0;
             }
         }
 
-        private IEnumerator AttackDelay()
+        public void Update()
         {
-            yield return new WaitForSeconds(attackDatas[_currentAttackCount].AttackDelay);
-            if (IsCanAttack)
+            if (!isAttacking)
             {
-                _currentAttackCount++;
-                if (_currentAttackCount >= attackDatas.Length)
-                    _currentAttackCount = 0;
-                _stateCompo.ChangeState("ATTACK", true);
-                StartCoroutine(AttackDelay());
+                timer += Time.deltaTime;
+
+                if (timer >= ATTACK_DELAY)
+                {
+                    Attack();
+                    timer = 0;
+                }
             }
         }
 
-        public void StopAttack() => IsCanAttack = false;
+        public void StopAttack() => IsSoptAttack = true;
+        public void SetAttackComboAnim() => _animatorCompo.SetParam(Animator.StringToHash("ATTACK_COUNT"), (float)_currentAttackCount);
     }
 }

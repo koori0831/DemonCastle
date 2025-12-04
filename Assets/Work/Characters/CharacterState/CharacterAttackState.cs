@@ -7,32 +7,21 @@ using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
-    public class CharacterAttackState : State
+    public class CharacterAttackState : CharacterCanMoveState
     {
-        private Character _character;
         private CharacterAttackCompo _attackCompo;
-        private CharacterAnimatorCompo _animatorCompo;
-        private CharacterMovementCompo _movementCompo;
-        private StateCompo _stateCompo;
-
-        private int _attackIndex;
 
         public CharacterAttackState(Entity entity, int animHash) : base(entity, animHash)
         {
-            _character = entity as Character;
-
             _attackCompo = _character.GetCompo<CharacterAttackCompo>(true);
-            _animatorCompo = _character.GetCompo<CharacterAnimatorCompo>(true);
-            _movementCompo = _character.GetCompo<CharacterMovementCompo>(true);
-            _stateCompo = _character.GetCompo<StateCompo>(true);
         }
 
         public override void Enter()
         {
-            _animatorCompo.SetParam(Animator.StringToHash("ATTACK_COUNT"),(float)_attackIndex);
             base.Enter();
-            _attackIndex = _attackCompo.CurrentAttackCount;
-            Bus<PlayerMoveEvent>.Events += HandleMoveDirectionChanged;
+            _attackCompo.isAttacking = true;
+            _movementCompo.SetCanMove(true);
+            _movementCompo.SetMultiplier(0.4f);
         }
 
         public override void Update()
@@ -47,12 +36,9 @@ namespace Work.Characters.CharacterState
         public override void Exit()
         {
             base.Exit();
-            Bus<PlayerMoveEvent>.Events -= HandleMoveDirectionChanged;
-        }
-
-        private void HandleMoveDirectionChanged(PlayerMoveEvent evt)
-        {
-            _movementCompo.SetDirection(evt.MoveDirection);
+            _attackCompo.isAttacking = false;
+            _movementCompo.SetCanMove(false);
+            _movementCompo.SetMultiplier(1);
         }
     }
 }
