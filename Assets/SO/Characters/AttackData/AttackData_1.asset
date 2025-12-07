@@ -15,4 +15,12 @@ MonoBehaviour:
   <AttackName>k__BackingField: Attack_1
   <AttackCount>k__BackingField: 0
   <AttackDamage>k__BackingField: 5
-  <AttackDelay>k__BackingField: 3
+  <attackParams>k__BackingField:
+    RecallObject:
+    - {fileID: 1370664460045325284, guid: 742fd0e5e0dccbf4ab2c17d85909fa85, type: 3}
+    stringKeyIntValueList: []
+    stringKeyFloatValueList:
+    - name: bulletSpeed
+      value: 6
+    stringKeyVectorValueList: []
+    stringKeyEffectValueList: []

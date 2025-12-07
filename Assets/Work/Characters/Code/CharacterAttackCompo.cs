@@ -16,7 +16,7 @@ namespace Work.Characters.Code
 
         private Character _character;
         private StateCompo _stateCompo;
-        private AttackDataSO[] attackDatas;
+        private AbstractAttackDataSO[] attackDatas;
         private DetectSensorCompo _sensorCompo;
         private CharacterAnimatorCompo _animatorCompo;
 
