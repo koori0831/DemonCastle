@@ -20,6 +20,7 @@ namespace Work.TRPG.Dialogue
 
         public bool IsRunning => _currentContainer != null;
         public NodeData CurrentNode => _currentNode;
+        public DialogueContainerSO CurrentContainer => _currentContainer;
 
         public void StartDialogue(DialogueContainerSO container)
         {
@@ -45,7 +46,7 @@ namespace Work.TRPG.Dialogue
                 StopDialogue();
                 return;
             }
-
+             
             EnterNode(_currentNode);
         }
 

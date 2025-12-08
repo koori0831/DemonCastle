@@ -164,7 +164,7 @@ namespace Work.TRPG.Dialogue.Editor
                         dialogueData.SetGuid(node.Guid);
                         dialogueData.SetPosition(node.GetNodePosition());
                         dialogueData.SetSpeaker(node.SpeakerField?.value);
-                        dialogueData.SetTextKey(node.TextKeyField?.value);
+                        dialogueData.SetTextKey(node.TextKeyField?.Value);
                         nodeData.Add(dialogueData);
                         break;
                     case DialogueNodeType.Choice:
@@ -188,7 +188,7 @@ namespace Work.TRPG.Dialogue.Editor
             return nodeData;
         }
 
-        public void PopulateFromContainer(DialogueContainerSO container)
+public void PopulateFromContainer(DialogueContainerSO container)
         {
             ClearGraph();
             if (container == null)
@@ -202,6 +202,7 @@ namespace Work.TRPG.Dialogue.Editor
             {
                 var node = CreateNode(nodeData.NodeType, nodeData.Guid, nodeData.Position);
                 node.LoadFromData(nodeData);
+                node.UpdateTextKeyOptions(container);
             }
 
             foreach (var link in linkList)
@@ -228,6 +229,14 @@ namespace Work.TRPG.Dialogue.Editor
             if (startNode != null)
             {
                 FrameNode(startNode);
+            }
+        }
+
+public void UpdateAllTextKeyOptions(DialogueContainerSO container)
+        {
+            foreach (var node in _nodes)
+            {
+                node.UpdateTextKeyOptions(container);
             }
         }
 

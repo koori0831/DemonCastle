@@ -141,7 +141,7 @@ namespace Work.TRPG.Dialogue.Editor
             _graphView.PopulateFromContainer(_activeContainer);
         }
 
-        private void UpdateContainerBindings()
+private void UpdateContainerBindings()
         {
             if (_mainTableField == null || _relatedTablesField == null)
             {
@@ -164,6 +164,15 @@ namespace Work.TRPG.Dialogue.Editor
             _containerSerializedObject = new SerializedObject(_activeContainer);
             _mainTableField.Bind(_containerSerializedObject);
             _relatedTablesField.Bind(_containerSerializedObject);
+            
+            // Update text key options for all nodes when container changes
+            _graphView.UpdateAllTextKeyOptions(_activeContainer);
+            
+            // Track changes to MainTable to update dropdowns
+            _mainTableField.RegisterValueChangeCallback(evt => 
+            {
+                _graphView.UpdateAllTextKeyOptions(_activeContainer);
+            });
         }
 
         private void SaveData()

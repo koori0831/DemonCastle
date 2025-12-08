@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Work.TRPG.Code;
+using Work.TRPG.Dialogue;
 
 namespace Work.TRPG.Dialogue
 {
@@ -8,12 +10,19 @@ namespace Work.TRPG.Dialogue
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private DialogueView dialogueView;
         [SerializeField] private DialogueModel dialogueModel = new();
+        [SerializeField] private DialogueLocalizationSettings localizationSettings;
 
-        private void Awake()
+private void Awake()
         {
             if (dialogueManager == null)
             {
                 dialogueManager = FindAnyObjectByType<DialogueManager>();
+            }
+            
+            // Initialize the text resolver
+            if (localizationSettings != null)
+            {
+                DialogueTextResolver.Initialize(localizationSettings);
             }
         }
 
@@ -77,12 +86,15 @@ namespace Work.TRPG.Dialogue
             }
         }
 
-        private void HandleChoiceNode(ChoiceNodeData node)
+private void HandleChoiceNode(ChoiceNodeData node)
         {
             var buffer = new List<ChoiceButtonModel>();
+            var currentContainer = GetCurrentContainer();
+            
             foreach (var choice in node.Choices)
             {
-                buffer.Add(new ChoiceButtonModel(choice.ChoiceGuid, choice.TextKey));
+                string resolvedText = DialogueTextResolver.ResolveText(choice.TextKey, currentContainer);
+                buffer.Add(new ChoiceButtonModel(choice.ChoiceGuid, resolvedText));
             }
 
             dialogueModel.SetChoices(buffer);
@@ -94,15 +106,18 @@ namespace Work.TRPG.Dialogue
             dialogueView?.ClearChoiceButtons();
         }
 
-        private void UpdateDialogue(DialogueNodeData node)
+private void UpdateDialogue(DialogueNodeData node)
         {
             if (node == null)
             {
                 return;
             }
 
+            var currentContainer = GetCurrentContainer();
+            string resolvedText = DialogueTextResolver.ResolveText(node.TextKey, currentContainer);
+            
             dialogueModel.SpeakerName.Value = node.SpeakerId;
-            dialogueModel.BodyText.Value = node.TextKey;
+            dialogueModel.BodyText.Value = resolvedText;
         }
 
         private void OnChoiceSelected(string choiceGuid)
@@ -110,9 +125,17 @@ namespace Work.TRPG.Dialogue
             dialogueManager?.SelectChoice(choiceGuid);
         }
 
-        private void OnProceed()
+        [ContextMenu("Proceed Dialogue")]
+private void OnProceed()
         {
             dialogueManager?.Proceed();
+        }
+        
+        private DialogueContainerSO GetCurrentContainer()
+        {
+            // We need to access the current container from DialogueManager
+            // For now, let's add a public property to DialogueManager
+            return dialogueManager?.CurrentContainer;
         }
     }
 }

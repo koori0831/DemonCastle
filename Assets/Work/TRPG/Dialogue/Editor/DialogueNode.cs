@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -11,15 +11,15 @@ namespace Work.TRPG.Dialogue.Editor
         private const float NodeWidth = 320f;
         private const float NodeHeight = 200f;
 
-        private readonly Dictionary<string, TextField> _choiceFields = new();
+        private readonly Dictionary<string, TextKeyDropdownField> _choiceFields = new();
         private Port _inputPort;
         private readonly Dictionary<string, Port> _outputPorts = new();
 
         public string Guid { get; private set; }
         public DialogueNodeType NodeType { get; }
 
-        public TextField SpeakerField { get; private set; }
-        public TextField TextKeyField { get; private set; }
+public TextField SpeakerField { get; private set; }
+        public TextKeyDropdownField TextKeyField { get; private set; }
         public EnumField StatField { get; private set; }
         public IntegerField StatOverrideField { get; private set; }
 
@@ -91,7 +91,7 @@ namespace Work.TRPG.Dialogue.Editor
 
                     if (TextKeyField != null)
                     {
-                        TextKeyField.value = dialogue.TextKey;
+                        TextKeyField.Value = dialogue.TextKey;
                     }
 
                     break;
@@ -131,12 +131,12 @@ namespace Work.TRPG.Dialogue.Editor
             }
         }
 
-        private void CreateDialogueFields()
+private void CreateDialogueFields()
         {
             SpeakerField = new TextField("Speaker ID");
             extensionContainer.Add(SpeakerField);
 
-            TextKeyField = new TextField("Text Key");
+            TextKeyField = new TextKeyDropdownField("Text Key");
             extensionContainer.Add(TextKeyField);
         }
 
@@ -214,12 +214,12 @@ namespace Work.TRPG.Dialogue.Editor
             return port;
         }
 
-        private void AddChoicePort(string label = "Choice", string guid = null)
+private void AddChoicePort(string label = "Choice", string guid = null)
         {
             var port = AddOutputPort(guid ?? DialogueGuidUtility.CreateGuid());
             string key = port.portName;
 
-            var field = new TextField("Text Key") { value = label };
+            var field = new TextKeyDropdownField("Text Key") { Value = label };
             field.style.flexGrow = 1f;
             _choiceFields[key] = field;
 
@@ -271,6 +271,21 @@ namespace Work.TRPG.Dialogue.Editor
             return StatOverrideField != null ? StatOverrideField.value : -1;
         }
 
+public void UpdateTextKeyOptions(DialogueContainerSO container)
+        {
+            if (TextKeyField != null)
+            {
+                TextKeyField.SetContainer(container);
+                TextKeyField.UpdateAvailableKeys();
+            }
+
+            foreach (var choiceField in _choiceFields.Values)
+            {
+                choiceField.SetContainer(container);
+                choiceField.UpdateAvailableKeys();
+            }
+        }
+
         public IEnumerable<ChoiceData> BuildChoiceData(IEnumerable<NodeLinkData> links)
         {
             if (NodeType != DialogueNodeType.Choice)
@@ -282,7 +297,7 @@ namespace Work.TRPG.Dialogue.Editor
             {
                 var nextLink = links?.FirstOrDefault(l => l.BaseNodeGuid == Guid && l.PortName == pair.Key);
                 string nextGuid = nextLink?.TargetNodeGuid;
-                yield return new ChoiceData(pair.Key, pair.Value.value, nextGuid);
+                yield return new ChoiceData(pair.Key, pair.Value.Value, nextGuid);
             }
         }
     }
