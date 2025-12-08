@@ -14,17 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Localization-Assets-Shared
   m_GUID: 687faad0e52c0354093d6868cd1a1576
-  m_SerializeEntries:
-  - m_GUID: 665e0e518836eab45b109410c3913b6f
-    m_Address: Assets/Localization/Speaker Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8035d4d35246ecf40801e8053fb107e4
-    m_Address: Assets/Localization/Sheets/TestTable Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: c3c3feaae9e4cfd498fa255e13c9cab9, type: 2}
   m_SchemaSet:

@@ -41,11 +41,21 @@ namespace VHierarchy
                 {
                     if (!curEvent.isRepaint) return;
 
+                    IEnumerable<int> dragSelectionList = null;
+                    try
+                    {
 #if UNITY_2021_1_OR_NEWER
-                    var dragSelectionList = treeViewController?.GetFieldValue("m_DragSelection")?.GetFieldValue<List<int>>("m_List");
+                        var dragSelectionObject = treeViewController?.GetFieldValue("m_DragSelection");
+                        dragSelectionList = dragSelectionObject?.GetFieldValue("m_List") as IEnumerable<int>;
 #else
-                    var dragSelectionList = treeViewController?.GetFieldValue<List<int>>("m_DragSelection");
+                        dragSelectionList = treeViewController?.GetFieldValue("m_DragSelection") as IEnumerable<int>;
 #endif
+                    }
+                    catch
+                    {
+                        // Fallback if type casting fails
+                        dragSelectionList = null;
+                    }
 
                     var dragging = dragSelectionList != null && dragSelectionList.Any();
 
@@ -690,7 +700,7 @@ namespace VHierarchy
                 var expandedChildren = new List<GameObject>();
 
                 foreach (var iid in expandedIds)
-                    if (EditorUtility.InstanceIDToObject(iid) is GameObject expandedGo && expandedGo.scene == scene)
+                    if (EditorUtility.EntityIdToObject(iid) is GameObject expandedGo && expandedGo.scene == scene)
                         if (expandedGo.transform.parent)
                             expandedChildren.Add(expandedGo);
                         else
@@ -749,7 +759,7 @@ namespace VHierarchy
             if (expandedIds == null)
                 UpdateExpandedIdsList();
 
-            if (EditorUtility.InstanceIDToObject(instanceId) is GameObject go)
+            if (EditorUtility.EntityIdToObject(instanceId) is GameObject go)
                 GameObjectRowGUI(go, rowRect);
             else
             {
@@ -854,7 +864,7 @@ namespace VHierarchy
                 var expandedChildren = new List<GameObject>();
 
                 foreach (var iid in expandedIds)
-                    if (EditorUtility.InstanceIDToObject(iid) is GameObject expandedGo)
+                    if (EditorUtility.EntityIdToObject(iid) is GameObject expandedGo)
                         if (expandedGo.transform.parent)
                             expandedChildren.Add(expandedGo);
                         else
@@ -887,7 +897,7 @@ namespace VHierarchy
                 var toCollapse = new List<GameObject>();
 
                 foreach (var iid in expandedIds.ToList())
-                    if (EditorUtility.InstanceIDToObject(iid) is GameObject expandedGo && !parents.Contains(expandedGo) && expandedGo != hoveredGo)
+                    if (EditorUtility.EntityIdToObject(iid) is GameObject expandedGo && !parents.Contains(expandedGo) && expandedGo != hoveredGo)
                         toCollapse.Add(expandedGo);
 
 
@@ -968,7 +978,14 @@ namespace VHierarchy
 
         static void UpdateExpandedIdsList() // delayCall loop
         {
-            expandedIds = hierarchyWindow?.GetFieldValue("m_SceneHierarchy")?.GetFieldValue("m_TreeViewState")?.GetPropertyValue<List<int>>("expandedIDs") ?? new List<int>();
+            try
+            {
+                expandedIds = hierarchyWindow?.GetFieldValue("m_SceneHierarchy")?.GetFieldValue("m_TreeViewState")?.GetPropertyValue<List<int>>("expandedIDs") ?? new List<int>();
+            }
+            catch
+            {
+                expandedIds = new List<int>();
+            }
 
             EditorApplication.delayCall -= UpdateExpandedIdsList;
             EditorApplication.delayCall += UpdateExpandedIdsList;
