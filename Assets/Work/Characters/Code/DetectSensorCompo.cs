@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Work.Combat;
 using Work.Entities;
@@ -14,7 +15,7 @@ namespace Work.Characters.Code
 
         public Entity Owner { get; private set; }
         public IDamageable CurrentTarget { get; private set; } //나중에 다른걸로 바뀔 가능성 있음 , 타겟이 존재하는지와 같은 검사는 모두 얘를 통해서 이루어짐
-        public bool IsExistTarget => CurrentTarget != null;
+        public bool IsExistTarget => CurrentTarget != null && CurrentTarget.Transform != null && CurrentTarget.Transform.gameObject != null;
 
         public delegate void OnTargetChange(IDamageable currentTarget, IDamageable prev);
         public event OnTargetChange OnTargetChangedEvent;
@@ -49,10 +50,21 @@ namespace Work.Characters.Code
                 if (!_inRangeTarget.Contains(damageable))
                 {
                     _inRangeTarget.Add(damageable);
-
+                    damageable.OnDeadEvent += HandleObjectDeadEvent;
                     SetTarget();
                 }
             }
+        }
+
+        private void HandleObjectDeadEvent(IDamageable damageable)
+        {
+            if(_inRangeTarget.Contains(damageable))
+            {
+                _inRangeTarget.Remove(damageable);
+            }
+            damageable.OnDeadEvent -= HandleObjectDeadEvent;
+            SetTarget();
+
         }
 
         private void SetTarget()
@@ -108,7 +120,7 @@ namespace Work.Characters.Code
                 if (_inRangeTarget.Contains(damageable))
                 {
                     _inRangeTarget.Remove(damageable);
-
+                    damageable.OnDeadEvent -= HandleObjectDeadEvent;
                     SetTarget();
                 }
             }

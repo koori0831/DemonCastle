@@ -37,6 +37,7 @@ namespace Work.Characters.CharacterState
         {
             base.Exit();
             _attackCompo.isAttacking = false;
+            _attackCompo.AddAttackCount();
             _movementCompo.SetCanMove(false);
             _movementCompo.SetMultiplier(1);
         }

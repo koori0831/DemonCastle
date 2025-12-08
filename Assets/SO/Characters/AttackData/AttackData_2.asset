@@ -12,7 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df50175b697b339488c026c1ab17887e, type: 3}
   m_Name: AttackData_2
   m_EditorClassIdentifier: Assembly-CSharp::Work.Combat.AttackDataSO
-  <AttackName>k__BackingField: Attack_2
+  <AttackClassPath>k__BackingField: Work.Characters.Attacks.LandWizardAttacks.Code.LandWizardSecondAttack
+  <AttackName>k__BackingField: LandWizardSecondAttack
   <AttackCount>k__BackingField: 1
   <AttackDamage>k__BackingField: 5
-  <AttackDelay>k__BackingField: 3
+  <AttackParams>k__BackingField:
+    RecallObjects:
+    - name: Bullet
+      value: {fileID: 1370664460045325284, guid: 742fd0e5e0dccbf4ab2c17d85909fa85, type: 3}
+    Ints:
+    - name: BulletCount
+      value: 15
+    Floats:
+    - name: BulletSpeed
+      value: 15
+    - name: BulletAngle
+      value: 15
+    - name: BulletDamage
+      value: 15
+    Vectors:
+    - name: PositionOffset
+      value: {x: -0.007, y: 1.568, z: 0.703}
+    Effects: []

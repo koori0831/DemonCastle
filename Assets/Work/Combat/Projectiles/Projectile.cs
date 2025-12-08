@@ -1,16 +1,25 @@
 using NUnit.Framework.Constraints;
 using UnityEngine;
+using Work.Entities;
 
 namespace Work.Combat.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private Rigidbody rbCompo;
-        [SerializeField] private float bulletSpeed = 5f;
         [SerializeField] private LayerMask targetLayer;
-        private const float STOP_OFFSET = 10f;
-        private Vector3 _direction;
-        private bool _isCanMove = false;
+        protected Entity _owner;
+        protected float _bulletSpeed = 5f;
+        protected const float STOP_OFFSET = 10f;
+        protected Vector3 _direction;
+        protected bool _isCanMove = false;
+
+        public virtual void ProjectileInit(Entity owner, Vector3 dir,float speed)
+        {
+            _owner = owner;
+            SetSpeed(speed);
+            SetDirection(dir);
+        }
 
         public void SetDirection(Vector3 dir) => _direction = dir;
 
@@ -26,7 +35,7 @@ namespace Work.Combat.Projectiles
         {
             if (_isCanMove)
             {
-                rbCompo.linearVelocity = _direction;
+                rbCompo.linearVelocity = _direction * _bulletSpeed;
             }
             else
             {
@@ -34,15 +43,20 @@ namespace Work.Combat.Projectiles
             }
         }
 
+        public void SetSpeed(float value)
+        {
+            _bulletSpeed = value;
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
-            if ((collision.gameObject.layer & targetLayer) != 0)
+            if ((collision.gameObject.layer & (1 << targetLayer)) != 0)
             {
-                OnCollisionAfter();
+                OnCollisionAfter(collision);
             }
         }
 
-        protected virtual void OnCollisionAfter()
+        protected virtual void OnCollisionAfter(Collision collision)
         {
             Destroy(gameObject);
         }

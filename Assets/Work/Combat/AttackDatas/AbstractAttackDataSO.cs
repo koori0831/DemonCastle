@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Work.Combat
@@ -13,10 +14,10 @@ namespace Work.Combat
         public List<EffectAndStringPair> stringKeyEffectValueList { get; private set; }
 
         public AttackClassParameters(
-            GameObject[] recallObject, 
-            List<IntAndStringPair> stringKeyIntValueList, 
-            List<FloatAndStringPair> stringKeyFloatValueList, 
-            List<VectorAndStringPair> stringKeyVectorValueList, 
+            GameObject[] recallObject,
+            List<IntAndStringPair> stringKeyIntValueList,
+            List<FloatAndStringPair> stringKeyFloatValueList,
+            List<VectorAndStringPair> stringKeyVectorValueList,
             List<EffectAndStringPair> stringKeyEffectValueList)
         {
             RecallObject = recallObject;
@@ -30,10 +31,18 @@ namespace Work.Combat
     [CreateAssetMenu(fileName = "AttackData", menuName = "SO/Combat/AbstractAttackDataSO", order = -10)]
     public class AbstractAttackDataSO : ScriptableObject
     {
+        [field: SerializeField] public string AttackClassPath {  get; private set; }
         [field: SerializeField] public string AttackName { get; private set; } = "Attack Name";
         [field: SerializeField] public int AttackCount { get; private set; } = 0;
         [field: SerializeField] public float AttackDamage { get; private set; } = 5;
-        [field: SerializeField] public AttackParameters attackParams { get; private set; }
+        [field: SerializeField] public AttackParameters AttackParams { get; private set; }
+    }
+
+    [Serializable]
+    public class GameObjectAndStringPair
+    {
+        public string name;
+        public GameObject value;
     }
 
     [Serializable]
@@ -68,18 +77,70 @@ namespace Work.Combat
     [Serializable]
     public class AttackParameters
     {
-        public GameObject[] RecallObject;
-        public List<IntAndStringPair> stringKeyIntValueList = new List<IntAndStringPair>();
-        public List<FloatAndStringPair> stringKeyFloatValueList = new List<FloatAndStringPair>();
-        public List<VectorAndStringPair> stringKeyVectorValueList = new List<VectorAndStringPair>();
-        public List<EffectAndStringPair> stringKeyEffectValueList = new List<EffectAndStringPair>();
+        [SerializeField] private List<GameObjectAndStringPair> RecallObjects;
+        [SerializeField] private List<IntAndStringPair> Ints;
+        [SerializeField] private List<FloatAndStringPair> Floats;
+        [SerializeField] private List<VectorAndStringPair> Vectors;
+        [SerializeField] private List<EffectAndStringPair> Effects;
 
-
-        public AttackClassParameters attackClassParameters { get; private set; }
-
-        public void GetParams(out AttackClassParameters attackParameters)
+        public float GetFloatValue(string key)
         {
-            attackParameters = new AttackClassParameters(RecallObject, stringKeyIntValueList, stringKeyFloatValueList, stringKeyVectorValueList, stringKeyEffectValueList);
+            float value = float.MinValue;
+            Floats.ForEach(s =>
+            {
+                if(s.name == key)
+                    value =  s.value;
+            });
+
+            return value;
+        }
+
+        public int GetIntValue(string key)
+        {
+            int value = int.MinValue;
+            Ints.ForEach(s =>
+            {
+                if (s.name == key)
+                    value = s.value;
+            });
+
+            return value;
+        }
+
+        public Vector3 GetVectorValue(string key)
+        {
+            Vector3 value = Vector3.zero;
+            Vectors.ForEach(s =>
+            {
+                if (s.name == key)
+                    value = s.value;
+            });
+
+            return value;
+        }
+
+        public ParticleSystem GetEffectValue(string key)
+        {
+            ParticleSystem value = null;
+            Effects.ForEach(s =>
+            {
+                if (s.name == key)
+                    value = s.value;
+            });
+
+            return value;
+        }
+
+        public GameObject GetObjectValue(string key)
+        {
+            GameObject value = null;
+            RecallObjects.ForEach(s =>
+            {
+                if (s.name == key)
+                    value = s.value;
+            });
+
+            return value;
         }
     }
 }

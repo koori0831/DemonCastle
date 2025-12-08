@@ -321,7 +321,6 @@ GameObject:
   m_Component:
   - component: {fileID: 185834861}
   - component: {fileID: 185834860}
-  - component: {fileID: 185834859}
   - component: {fileID: 185834858}
   m_Layer: 0
   m_Name: UI Camera
@@ -374,14 +373,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &185834859
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185834857}
-  m_Enabled: 1
 --- !u!20 &185834860
 Camera:
   m_ObjectHideFlags: 0
@@ -1015,7 +1006,7 @@ GameObject:
   - component: {fileID: 586027222}
   - component: {fileID: 586027221}
   - component: {fileID: 586027220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTarget (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1120,7 +1111,7 @@ Transform:
   m_GameObject: {fileID: 586027219}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.73, y: 0, z: 1.24}
+  m_LocalPosition: {x: -6.73, y: 0.784, z: 1.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1346,7 +1337,7 @@ GameObject:
   - component: {fileID: 946669580}
   - component: {fileID: 946669579}
   - component: {fileID: 946669578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTarget (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1451,7 +1442,7 @@ Transform:
   m_GameObject: {fileID: 946669577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.72, y: 0, z: 4.81}
+  m_LocalPosition: {x: -8.72, y: 0.56, z: 4.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1922,7 +1913,7 @@ GameObject:
   - component: {fileID: 2063336950}
   - component: {fileID: 2063336949}
   - component: {fileID: 2063336948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTarget (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2027,7 +2018,7 @@ Transform:
   m_GameObject: {fileID: 2063336947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 3.36}
+  m_LocalPosition: {x: -4, y: 0.76, z: 3.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

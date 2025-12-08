@@ -19,6 +19,8 @@ namespace Work.Entities
         public AbstractEntityDataSO EntityDataSO { get; private set; }
         public Transform Transform => this != null ? transform : null;
 
+        public Action<IDamageable> OnDeadEvent { get; set; }
+
         #endregion
 
         #region Init
