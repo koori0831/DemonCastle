@@ -20,7 +20,7 @@ namespace Work.Combat.Projectiles
             {
                 Vector3 normal = transform.position - collision.collider.ClosestPoint(transform.position);
 
-                damageable.TakeDamage(_owner,_damage, normal.normalized);
+                damageable.TakeDamage(_owner,_damage, normal.normalized, true, 2);
             }
 
             Instantiate(destroyEffect,transform.position,Quaternion.identity);

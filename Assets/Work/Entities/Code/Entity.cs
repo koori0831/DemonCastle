@@ -18,8 +18,10 @@ namespace Work.Entities
         public StatContainer StatContainer { get; private set; }
         public AbstractEntityDataSO EntityDataSO { get; private set; }
         public Transform Transform => this != null ? transform : null;
+        public bool IsDead { get; private set; }
 
         public Action<IDamageable> OnDeadEvent { get; set; }
+
 
         #endregion
 
@@ -72,7 +74,7 @@ namespace Work.Entities
 
         public void TakeDamage(Entity attacker, float damage, Vector3 normal, bool isKnockback = false, float knockbackPower = 0)
         {
-            OnTakeDamageEvent?.Invoke(attacker,damage,normal,isKnockback,knockbackPower);
+            OnTakeDamageEvent?.Invoke(attacker, damage, normal, isKnockback, knockbackPower);
         }
         #endregion
     }

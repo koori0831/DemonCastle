@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Work.Combat;
 using Work.Entities;
@@ -58,27 +57,18 @@ namespace Work.Characters.Code
 
         private void HandleObjectDeadEvent(IDamageable damageable)
         {
-            if(_inRangeTarget.Contains(damageable))
-            {
-                _inRangeTarget.Remove(damageable);
-            }
+            //if (_inRangeTarget.Contains(damageable)) { _inRangeTarget.Remove(damageable); }
             damageable.OnDeadEvent -= HandleObjectDeadEvent;
             SetTarget();
-
         }
 
         private void SetTarget()
         {
             if (_inRangeTarget.Count == 0 && CurrentTarget == null) return;
+            RefreshTargets();
 
             IDamageable prev = CurrentTarget;
 
-            if (_inRangeTarget.Count == 0)
-            {
-                CurrentTarget = null;
-            }
-
-            RefreshTargets();
 
             for (int i = 0; i < _inRangeTarget.Count; i++)
             {
@@ -103,13 +93,26 @@ namespace Work.Characters.Code
 
         private void RefreshTargets()
         {
+            if (CurrentTarget != null && (CurrentTarget.Transform == null || CurrentTarget.Transform.gameObject == null || CurrentTarget.IsDead))
+            {
+                CurrentTarget = null;
+                OnTargetChangedEvent?.Invoke(CurrentTarget, null);
+            }
+
             int cnt = _inRangeTarget.Count;
             for (int i = cnt - 1; i >= 0; i--)
             {
-                if (_inRangeTarget[i] == null || _inRangeTarget[i].Transform == null || _inRangeTarget[i].Transform.gameObject == null)
+                if (_inRangeTarget[i] == null || _inRangeTarget[i].Transform == null || _inRangeTarget[i].Transform.gameObject == null || _inRangeTarget[i].IsDead)
                 {
                     _inRangeTarget.RemoveAt(i);
                 }
+            }
+            Debug.Log(cnt);
+
+            if (_inRangeTarget.Count == 0)
+            {
+                CurrentTarget = null;
+                OnTargetChangedEvent?.Invoke(CurrentTarget, null);
             }
         }
 

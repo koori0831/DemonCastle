@@ -11,9 +11,12 @@ namespace Work.Combat.Test
 {
     public class TestTarget : MonoBehaviour, IDamageable
     {
+        public Rigidbody rbCompo;
+
         public Transform Transform => this != null ? transform : null;
 
         public Action<IDamageable> OnDeadEvent { get; set; }
+        public bool IsDead { get; private set; }
 
         public float health = 100;
 
@@ -21,8 +24,14 @@ namespace Work.Combat.Test
         {
             health -= damage;
 
+            if(isKnockback)
+            {
+                rbCompo.AddForce(-normal * knockbackPower);
+            }
+
             if(health <= 0)
             {
+                IsDead = true;
                 OnDeadEvent?.Invoke(this);
                 Destroy(gameObject);
             }

@@ -67,7 +67,7 @@ namespace Work.Characters.Code
 
         private void HandleTargetChangeEvent(IDamageable currentTarget, IDamageable prev)// 타겟이 바뀌면 알려주는 함수
         {
-            IsCanAttack = currentTarget != null;
+            IsCanAttack = currentTarget != null && currentTarget.Transform != null && currentTarget.Transform.gameObject != null;
             _currentAttackCount = 0;
             if (IsSoptAttack || !IsCanAttack)
                 _stateCompo.ChangeState("IDLE", false);

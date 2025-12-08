@@ -25,11 +25,11 @@ MonoBehaviour:
       value: 15
     Floats:
     - name: BulletSpeed
-      value: 15
+      value: 25
     - name: BulletAngle
       value: 15
     - name: BulletDamage
-      value: 15
+      value: 5
     Vectors:
     - name: PositionOffset
       value: {x: -0.007, y: 1.568, z: 0.703}
