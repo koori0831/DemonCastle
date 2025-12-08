@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d727d151b5a2c2847b0c26f3202ee662, type: 3}
+  m_Name: TestDialogueContainer
+  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Dialogue.DialogueContainerSO
+  startNodeGuid: 23b50c2ee50c4f5a889acb0549d215d6
+  nodeLinks:
+  - baseNodeGuid: 23b50c2ee50c4f5a889acb0549d215d6
+    targetNodeGuid: db1598a53939463893d4f483bb5d8951
+    portName: Next
+  - baseNodeGuid: db1598a53939463893d4f483bb5d8951
+    targetNodeGuid: 74bf6d805a8b4da4998c0e5ec0ab7fc8
+    portName: Next
+  - baseNodeGuid: 74bf6d805a8b4da4998c0e5ec0ab7fc8
+    targetNodeGuid: 1b45de2a17a5400087da3fb26fdd77dc
+    portName: 9e906eaa7ddd419a8cf3ff90c599d957
+  - baseNodeGuid: 74bf6d805a8b4da4998c0e5ec0ab7fc8
+    targetNodeGuid: 4440b63385354c4e9de490cbccf05dfe
+    portName: 5a201ae6f05244d8a535cc1b09081f7c
+  - baseNodeGuid: 4440b63385354c4e9de490cbccf05dfe
+    targetNodeGuid: 1b45de2a17a5400087da3fb26fdd77dc
+    portName: Next
+  nodeDataList:
+  - rid: 7499065224500347037
+  - rid: 7499065224500347038
+  - rid: 7499065224500347039
+  - rid: 7499065224500347040
+  - rid: 7499065224500347041
+  mainTable: {fileID: 11400000, guid: 4dfc9793def5a6243a54f9d00909483e, type: 2}
+  relatedTables:
+  - {fileID: 11400000, guid: 193bb61aa51aac744ab2375a2bb29ec8, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7499065224500347037
+      type: {class: StartNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 23b50c2ee50c4f5a889acb0549d215d6
+        position: {x: 617, y: 132}
+        nodeType: 1
+    - rid: 7499065224500347038
+      type: {class: DialogueNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: db1598a53939463893d4f483bb5d8951
+        position: {x: 780, y: -67}
+        nodeType: 2
+        speakerId: 123
+        textKey: Test
+    - rid: 7499065224500347039
+      type: {class: EndNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 1b45de2a17a5400087da3fb26fdd77dc
+        position: {x: 1865, y: 286}
+        nodeType: 5
+    - rid: 7499065224500347040
+      type: {class: ChoiceNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 74bf6d805a8b4da4998c0e5ec0ab7fc8
+        position: {x: 1025, y: 132}
+        nodeType: 3
+        choices:
+        - choiceGuid: 9e906eaa7ddd419a8cf3ff90c599d957
+          textKey: TestChoice3
+          nextNodeGuid: 1b45de2a17a5400087da3fb26fdd77dc
+        - choiceGuid: 5a201ae6f05244d8a535cc1b09081f7c
+          textKey: TestChoice2
+          nextNodeGuid: 4440b63385354c4e9de490cbccf05dfe
+    - rid: 7499065224500347041
+      type: {class: DialogueNodeData, ns: Work.TRPG.Dialogue, asm: Assembly-CSharp}
+      data:
+        guid: 4440b63385354c4e9de490cbccf05dfe
+        position: {x: 1634, y: 53}
+        nodeType: 2
+        speakerId: 123
+        textKey: Test
