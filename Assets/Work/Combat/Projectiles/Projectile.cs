@@ -47,6 +47,11 @@ namespace Work.Combat.Projectiles
             _bulletSpeed = value;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             Debug.Log(collision.gameObject.layer + " : Collision Object Layer");
