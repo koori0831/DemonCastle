@@ -12,12 +12,15 @@ namespace Work.TRPG.Code
         public bool isDouble;      // 더블 발생 여부
     }
 
-    public class TRPGDiceSystem : MonoBehaviour
+    public class TRPGDiceSystem
     {
-        public CheckInfo RollDice(int stat)
+        public TRPGDiceSystem()
         {
             RandomHelper.ResetRandomSeed();
+        }
 
+        public CheckInfo RollDice(int stat)
+        {
             CheckInfo checkInfo = new CheckInfo();
 
             checkInfo.originalDice = RandomHelper.RollDice(0, 99);
