@@ -26,7 +26,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
                 float oneAngle = _params.GetFloatValue("BulletAngle") / bulletCount;
 
 
-                Vector3 offset = _params.GetVectorValue("PositionOffset");
+                _params.GetValue("PositionOffset",out Vector3 offset);
                 Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
 
                 SendBullet bullet = MonoBehaviour.Instantiate(_sendBullet, _owner.transform.position + calculateOffset, Quaternion.identity).GetComponent<SendBullet>();

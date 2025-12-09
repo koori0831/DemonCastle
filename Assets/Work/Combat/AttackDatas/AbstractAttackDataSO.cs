@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Work.Combat
@@ -31,7 +30,7 @@ namespace Work.Combat
     [CreateAssetMenu(fileName = "AttackData", menuName = "SO/Combat/AbstractAttackDataSO", order = -10)]
     public class AbstractAttackDataSO : ScriptableObject
     {
-        [field: SerializeField] public string AttackClassPath {  get; private set; }
+        [field: SerializeField] public string AttackClassPath { get; private set; }
         [field: SerializeField] public string AttackName { get; private set; } = "Attack Name";
         [field: SerializeField] public int AttackCount { get; private set; } = 0;
         [field: SerializeField] public float AttackDamage { get; private set; } = 5;
@@ -83,13 +82,53 @@ namespace Work.Combat
         [SerializeField] private List<VectorAndStringPair> Vectors;
         [SerializeField] private List<EffectAndStringPair> Effects;
 
+        //public T GetValue<T>(string key)
+        //{
+        //    Type type = typeof(T);
+        //    if (typeof(GameObject) == type)
+        //    {
+        //        return (T)GetObjectValue(key);
+        //    }
+        //}
+
+        public bool GetValue(string key, out GameObject value)
+        {
+            value = GetObjectValue(key);
+            return value != null;
+        }
+
+        public bool GetValue(string key, out float value)
+        {
+            value = GetFloatValue(key);
+            return value != float.MinValue;
+        }
+
+        public bool GetValue(string key, out int value)
+        {
+            value = GetIntValue(key);
+            return value != int.MinValue;
+        }
+
+        public bool GetValue(string key, out Vector3 value)
+        {
+            value = GetVectorValue(key);
+            return value != Vector3.zero;
+        }
+
+        public bool GetValue(string key, out ParticleSystem value)
+        {
+            value = GetEffectValue(key);
+            return value != null;
+        }
+
+
         public float GetFloatValue(string key)
         {
             float value = float.MinValue;
             Floats.ForEach(s =>
             {
-                if(s.name == key)
-                    value =  s.value;
+                if (s.name == key)
+                    value = s.value;
             });
 
             return value;

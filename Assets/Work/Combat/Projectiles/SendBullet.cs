@@ -19,8 +19,9 @@ namespace Work.Combat.Projectiles
             if(collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
                 Vector3 normal = transform.position - collision.collider.ClosestPoint(transform.position);
-
-                damageable.TakeDamage(_owner,_damage, normal.normalized, true, 2);
+                normal.x *= -1;
+                normal.z *= -1;
+                damageable.TakeDamage(_owner,_damage, normal.normalized,true, 100);
             }
 
             Instantiate(destroyEffect,transform.position,Quaternion.identity);

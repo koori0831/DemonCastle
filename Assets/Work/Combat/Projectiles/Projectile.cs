@@ -1,4 +1,3 @@
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using Work.Entities;
 
@@ -14,7 +13,7 @@ namespace Work.Combat.Projectiles
         protected Vector3 _direction;
         protected bool _isCanMove = false;
 
-        public virtual void ProjectileInit(Entity owner, Vector3 dir,float speed)
+        public virtual void ProjectileInit(Entity owner, Vector3 dir, float speed)
         {
             _owner = owner;
             SetSpeed(speed);
@@ -39,7 +38,7 @@ namespace Work.Combat.Projectiles
             }
             else
             {
-                rbCompo.linearVelocity = Vector3.Lerp(rbCompo.linearVelocity,Vector3.zero,Time.deltaTime * STOP_OFFSET);
+                rbCompo.linearVelocity = Vector3.Lerp(rbCompo.linearVelocity, Vector3.zero, Time.deltaTime * STOP_OFFSET);
             }
         }
 
@@ -50,8 +49,11 @@ namespace Work.Combat.Projectiles
 
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log(collision.gameObject.layer + " : Collision Object Layer");
+            Debug.Log((collision.gameObject.layer & (1 << targetLayer)) != 0);
             if ((collision.gameObject.layer & (1 << targetLayer)) != 0)
             {
+                Debug.Log("collisiont " + name);
                 OnCollisionAfter(collision);
             }
         }

@@ -107,7 +107,6 @@ namespace Work.Characters.Code
                     _inRangeTarget.RemoveAt(i);
                 }
             }
-            Debug.Log(cnt);
 
             if (_inRangeTarget.Count == 0)
             {

@@ -24,7 +24,7 @@ namespace Work.Characters.Code
 
         private AbstractAttackDataSO[] _attackDatas;
         private Dictionary<string, AbstractCharacterAttack> _attacks = new Dictionary<string, AbstractCharacterAttack>();
-        private AbstractCharacterAttack CurrentAttack => _attacks[_attackDatas[CurrentAttackCount].AttackName];
+        public AbstractCharacterAttack CurrentAttack => _attacks[_attackDatas[CurrentAttackCount].AttackName];
 
         private DetectSensorCompo _sensorCompo;
         private CharacterAnimatorCompo _animatorCompo;

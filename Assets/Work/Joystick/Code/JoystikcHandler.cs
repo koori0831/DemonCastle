@@ -30,7 +30,6 @@ namespace Work.Joystick.Code
             _startPos = eventData.position;
             joystickParantImage.localPosition = eventData.position;
             joystickKnob.localPosition = eventData.position - _startPos;
-            Debug.Log(eventData.position);
         }
 
         public void OnPointerMove(PointerEventData eventData)

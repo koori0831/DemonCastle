@@ -14,14 +14,14 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public LandWizardFirstAttack(Character character, AttackParameters parameters) : base(character, parameters)
         {
-            _sendBullet = parameters.GetObjectValue("Bullet");
+            parameters.GetValue("Bullet", out _sendBullet);
 
             _sensor = _owner.GetCompo<DetectSensorCompo>(true);
         }
 
         public override void Attack()
         {
-            Vector3 offset = _params.GetVectorValue("PositionOffset");
+            _params.GetValue("PositionOffset", out Vector3 offset);
             Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
 
             SendBullet bullet = MonoBehaviour.Instantiate(_sendBullet, _owner.transform.position + calculateOffset, Quaternion.identity).GetComponent<SendBullet>();
