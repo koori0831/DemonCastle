@@ -1,0 +1,185 @@
+﻿1. 전체 아키텍처 다이어그램 (System Architecture)
+
+전체적인 흐름
+
+graph TD
+    subgraph "Editor Layer (Tooling)"
+        E_Window[Dialogue Editor Window]
+        E_Graph[GraphView (Node Canvas)]
+        E_Insp[Inspector View]
+        E_Save[Save/Load System]
+        
+        E_Window --> E_Graph
+        E_Graph --> E_Insp
+        E_Graph -- Generates --> D_SO
+    end
+
+    subgraph "Data Layer (ScriptableObject)"
+        D_SO[DialogueContainerSO]
+        D_Node[List: NodeData]
+        D_Link[List: NodeLinkData]
+        
+        D_SO --> D_Node
+        D_SO --> D_Link
+    end
+
+    subgraph "Runtime Logic Layer"
+        R_Obj[DialogueObject (Trigger)]
+        R_Mgr[Dialogue Manager]
+        R_Dice[TRPG Dice System]
+        
+        R_Obj -- Passes SO --> R_Mgr
+        R_Mgr -- Reads --> D_SO
+        R_Mgr -- Request Roll --> R_Dice
+        R_Dice -- Return Result --> R_Mgr
+    end
+
+    subgraph "Runtime UI Layer (MVP)"
+        U_Model[Dialogue Model]
+        U_Pres[Dialogue Presenter]
+        U_View[Dialogue View]
+        
+        R_Mgr -- Update State --> U_Model
+        U_Model -- Notify --> U_Pres
+        U_Pres -- Control --> U_View
+        U_View -- Input (Choices) --> U_Pres
+        U_Pres -- Forward Input --> R_Mgr
+    end
+
+2. 데이터 구조 (Data Layer)
+
+DialogueDataSO는 런타임과 에디터 양쪽에서 사용되는 핵심 데이터 컨테이너입니다. 노드 간의 순환 참조 문제를 막기 위해 GUID 기반 연결 방식을 사용합니다.
+
+    DialogueContainerSO (ScriptableObject)
+
+        List<NodeData> NodeDataList: 생성된 모든 노드 데이터.
+
+        List<NodeLinkData> NodeLinks: 노드 간 연결 정보 (BaseNodeGuid -> TargetNodeGuid).
+
+    NodeData (Base Class)
+
+        string GUID: 노드 고유 식별자.
+
+        Vector2 Position: 에디터 상의 위치 (저장용).
+
+        NodeType Type: (Start, Dialogue, Check 등).
+
+    DialogueNodeData : NodeData
+
+        string SpeakerID: 화자 식별자 (Localization 대응).
+
+        string TextKey: 대사 텍스트 키 (Localization 대응).
+
+    ChoiceNodeData : NodeData
+
+        List<ChoiceData>: 선택지 목록 (각 선택지는 TextKey와 연결될 NextNodeID를 가짐).
+
+    CheckNodeData : NodeData
+
+        StatType TargetStat: 검정할 스탯 (STR, DEX 등).
+
+3. 런타임 로직 (Runtime Logic Layer)
+
+실제 게임 플레이 시 대화를 진행하는 두뇌 역할을 합니다.
+
+    DialogueManager (MonoBehaviour / Singleton)
+
+        역할: 대화 흐름 제어, 다음 노드 탐색.
+
+        핵심 로직:
+
+            StartDialogue(DialogueContainerSO)로 시작.
+
+            CurrentNode를 StartNode로 설정.
+
+            ProccessNode(NodeData node) 실행.
+
+            검정 노드(CheckNode) 도달 시:
+
+                TRPGDiceSystem.RollDice(stat) 호출.
+
+                결과(CriticalSuccess, Success, Failure, Fumble)를 반환받음.
+
+                해당 결과에 연결된 다음 노드(Output Port)를 찾아 이동.
+
+    TRPGDiceSystem
+
+        역할: 주사위 굴림 및 결과 판정.
+
+        public CheckInfo RollDice(int statValue)
+
+4. UI 프레젠테이션 (MVP Layer)
+
+데이터 변경을 감지하고 화면을 그립니다.
+
+    DialogueModel (Pure C# Class)
+
+        역할: 뷰가 보여줘야 할 데이터의 스냅샷.
+
+        string SpeakerName (로컬라이즈 완료된).
+
+        string BodyText (로컬라이즈 완료된).
+
+        List<ChoiceButtonModel> (선택지 정보).
+
+        event Action OnModelUpdated: 데이터 변경 시 프레젠터에 알림.
+
+    DialoguePresenter (MonoBehaviour)
+
+        역할: UI 로직 담당. 중개자.
+
+        DialogueManager가 노드를 진행시키면 -> Localization System을 통해 텍스트를 가져옴 -> DialogueModel 업데이트.
+
+        DialogueModel의 이벤트를 수신하여 DialogueView 갱신 명령.
+
+        DialogueView에서 선택지 클릭 이벤트 발생 시 DialogueManager.SelectChoice() 호출.
+
+    DialogueView (MonoBehaviour)
+
+        역할: 순수 뷰. 로직 없음.
+
+        UGUI Text(TMP), Image, Button 등을 참조.
+
+        public void SetText(...), public void ShowChoices(...) 등의 메서드만 보유.
+
+5. 에디터 툴 (Editor Layer)
+
+개발자가 노드를 시각적으로 편집하는 공간입니다. **Unity UI Toolkit (GraphView)**를 사용합니다.
+
+    DialogueEditorWindow : EditorWindow
+
+        에디터 창을 띄우고 DialogueGraphView를 초기화.
+
+        툴바(저장, 로드, 미니맵 토글) 포함.
+
+    DialogueGraphView : GraphView
+
+        노드 캔버스. 줌/팬, 노드 생성/삭제/연결 조작 담당.
+
+        OnGraphViewChanged: 변경 사항 감지.
+
+    DialogueNode (VisualElement)
+
+        에디터 화면에 그려지는 노드 UI. (타이틀, 입력 포트, 출력 포트, 내용 컨테이너).
+
+        검정 노드(Check Node) UI: 성공/실패 등 결과별로 출력 포트(Port)를 4개(Critical, Success, Fail, Fumble) 생성하여 시각적으로 연결할 수 있게 함.
+
+    NodeSearchProvider : ScriptableObject
+
+        스페이스바 또는 우클릭 시 노드 생성 검색창 제공.
+
+6. 로컬리제이션 & TRPG 특화 흐름 예시
+
+시나리오: "민첩(DEX) 판정으로 함정을 피해야 하는 상황"
+
+    [Data] CheckNodeData에 TargetStat: DEX. 성공 시 노드 A, 실패 시 노드 B로 연결됨.
+
+    [Runtime] DialogueManager가 이 노드에 진입.
+
+    [Logic] TRPGDiceSystem에 DEX 값을 보냄. -> 주사위 굴림 -> "실패(Failure)" 리턴.
+
+    [Flow] 매니저는 'Failure' 포트에 연결된 노드 B의 GUID를 찾음.
+
+    [Localization] 노드 B는 "함정에 걸렸다!"라는 텍스트 키(trap_fail_01)를 가짐. 매니저는 로컬라이제이션 테이블에서 한국어 "함정에 걸려 넘어졌습니다."를 가져옴.
+
+    [UI] DialoguePresenter를 통해 화면에 출력.

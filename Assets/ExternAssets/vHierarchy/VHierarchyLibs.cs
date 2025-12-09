@@ -366,10 +366,77 @@ namespace VHierarchy.Libs
 
 
 
-        public static T GetFieldValue<T>(this object o, string fieldName, bool exceptionIfNotFound = true) => (T)o.GetFieldValue(fieldName, exceptionIfNotFound);
-        public static T GetPropertyValue<T>(this object o, string propertyName, bool exceptionIfNotFound = true) => (T)o.GetPropertyValue(propertyName, exceptionIfNotFound);
-        public static T GetMemberValue<T>(this object o, string memberName, bool exceptionIfNotFound = true) => (T)o.GetMemberValue(memberName, exceptionIfNotFound);
-        public static T InvokeMethod<T>(this object o, string methodName, params object[] parameters) => (T)o.InvokeMethod(methodName, parameters);
+        public static T GetFieldValue<T>(this object o, string fieldName, bool exceptionIfNotFound = true)
+        {
+            var value = o.GetFieldValue(fieldName, exceptionIfNotFound);
+            if (value == null) return default(T);
+            
+            if (value is T directValue) return directValue;
+            
+            try
+            {
+                return (T)value;
+            }
+            catch
+            {
+                if (exceptionIfNotFound)
+                    throw new System.Exception($"Field '{fieldName}' value cannot be cast to type '{typeof(T).Name}'");
+                return default(T);
+            }
+        }
+        public static T GetPropertyValue<T>(this object o, string propertyName, bool exceptionIfNotFound = true)
+        {
+            var value = o.GetPropertyValue(propertyName, exceptionIfNotFound);
+            if (value == null) return default(T);
+            
+            if (value is T directValue) return directValue;
+            
+            try
+            {
+                return (T)value;
+            }
+            catch
+            {
+                if (exceptionIfNotFound)
+                    throw new System.Exception($"Property '{propertyName}' value cannot be cast to type '{typeof(T).Name}'");
+                return default(T);
+            }
+        }
+        public static T GetMemberValue<T>(this object o, string memberName, bool exceptionIfNotFound = true)
+        {
+            var value = o.GetMemberValue(memberName, exceptionIfNotFound);
+            if (value == null) return default(T);
+            
+            if (value is T directValue) return directValue;
+            
+            try
+            {
+                return (T)value;
+            }
+            catch
+            {
+                if (exceptionIfNotFound)
+                    throw new System.Exception($"Member '{memberName}' value cannot be cast to type '{typeof(T).Name}'");
+                return default(T);
+            }
+        }
+        
+        public static T InvokeMethod<T>(this object o, string methodName, params object[] parameters)
+        {
+            var value = o.InvokeMethod(methodName, parameters);
+            if (value == null) return default(T);
+            
+            if (value is T directValue) return directValue;
+            
+            try
+            {
+                return (T)value;
+            }
+            catch
+            {
+                throw new System.Exception($"Method '{methodName}' return value cannot be cast to type '{typeof(T).Name}'");
+            }
+        }
 
 
 
@@ -1124,7 +1191,7 @@ namespace VHierarchy.Libs
         public struct GlobalID : System.IEquatable<GlobalID>
         {
             public Object GetObject() => GlobalObjectId.GlobalObjectIdentifierToObjectSlow(globalObjectId);
-            public int GetObjectInstanceId() => GlobalObjectId.GlobalObjectIdentifierToInstanceIDSlow(globalObjectId);
+            public int GetObjectInstanceId() => GlobalObjectId.GlobalObjectIdentifierToEntityIdSlow(globalObjectId);
 
 
             public string guid => globalObjectId.assetGUID.ToString();
@@ -1163,11 +1230,7 @@ namespace VHierarchy.Libs
         {
             var goids = globalIDs.Select(r => r.globalObjectId).ToArray();
 
-            var iids = new int[goids.Length];
-
-            GlobalObjectId.GlobalObjectIdentifiersToInstanceIDsSlow(goids, iids);
-
-            return iids;
+            return goids.Select(id => (int)GlobalObjectId.GlobalObjectIdentifierToEntityIdSlow(id)).ToArray();
         }
 
 
