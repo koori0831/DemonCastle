@@ -1,7 +1,6 @@
 ﻿using Core.Helper;
-using UnityEngine;
 
-namespace Work.TRPG.Code
+namespace Work.TRPG
 {
     [System.Serializable]
     public struct CheckInfo

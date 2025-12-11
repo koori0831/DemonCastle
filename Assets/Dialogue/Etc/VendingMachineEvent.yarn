@@ -1,4 +1,40 @@
 ﻿title: VendingMachineEvent
+position: 0,0
 ---
-This is an example of a Yarn Spinner script. Write your dialogue here! #line:07e77f7 
+
+평범한 자판기다.
+음료수를 뽑아 마셔보자.
+
+// 선택지
+->"음료수 뽑기"
+    <<jump VendingMachine_Roll>>
+->"발로 차기"
+    <<jump VendingMachine_Kick>>
+->"그만두기"
+    자판기 앞에서 물러났다.
 ===
+
+title: VendingMachine_Roll
+position: 200,0
+---
+자판기에 동전을 넣고 음료수를 뽑았다.
+===
+
+title: VendingMachine_Kick
+position: 400,0
+---
+자판기를 발로 찼다.
+
+<<RollCheckUI 55>>
+
+<<if $dice_result == 0>>
+    자판기에서 모든 음료수가 튀어나왔다!
+<<elseif $dice_result == 1>>
+    자판기에서 음료수가 하나 튀어나왔다.
+<<elseif $dice_result == 2>>
+    자판기가 흔들렸지만 아무 일도 일어나지 않았다.
+<<else>>
+    자판기가 고장나서 더 이상 작동하지 않는다!
+<<endif>>
+===
+

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9b9ff65e02e244a9933e867c43c94a, type: 3}
   m_Name: TestExperience
-  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Code.ExperienceFragment
+  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Fragment.ExperienceFragment
   fragmentName: 
   description: 
   icon: {fileID: 0}
