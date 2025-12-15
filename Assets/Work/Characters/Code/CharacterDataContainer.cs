@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 using Work.Characters.Code;
 using Work.Characters.Stats.Code;
-using Work.Joystick.Code;
-using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
+using Work.Inputs;
 
 namespace Work.Characters
 {
@@ -12,20 +9,16 @@ namespace Work.Characters
     {
         public Character CurrentCharacter { get; private set; }
         public Character characterPrefab;
-        public CharacterDataSO CurrentCharacterData {  get; private set; }
+        public CharacterDataSO CurrentCharacterData { get; private set; }
+        public StatContainer CurrentCharacterStats => CurrentCharacter != null ? CurrentCharacter.StatContainer : null;
         public Vector3 MoveDirection { get; private set; }
 
-        public JoystikcHandler JoystickHandler; //이거는 나중에 따로 빼야할듯
+        private InputContainer _inputContainer;
 
         private void Awake()
         {
-            JoystickHandler.OnMoveDirectionChangedEvent += HandleMoveDirectionChangeEvent;
-        }
-
-        private void HandleMoveDirectionChangeEvent(Vector3 prev, Vector3 current)
-        {
-            MoveDirection = current;
-            Bus<PlayerMoveEvent>.Raise(new PlayerMoveEvent(MoveDirection));
+            _inputContainer = new InputContainer();
+            _inputContainer.Init();
         }
 
         public void SetCharacterData(CharacterDataSO characterData) //탑에 들어가기 전에만 호출될거니까 뭐 할필요 없겠지..?

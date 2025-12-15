@@ -1,12 +1,14 @@
 ﻿using NUnit.Framework.Constraints;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.Entities.Code;
 
 namespace Work.Combat.Projectiles
 {
     public class RockBullet : Projectile
     {
+        public UnityEvent OnTakeDown;
         [SerializeField] private ParticleSystem destroyEffect;
         [SerializeField] private LayerMask damageableLayer;
         [SerializeField] private Color gizmoColor = new Color(1f, 0.2f, 0.2f, 0.35f);
@@ -32,12 +34,14 @@ namespace Work.Combat.Projectiles
 
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
             //base.OnCollisionAfter(collision);
+            GetComponent<Collider>().enabled = false;
             StartCoroutine(DeadProjectile());
+            OnTakeDown?.Invoke();
         }
 
         public IEnumerator DeadProjectile()
         {
-            yield return new WaitForSeconds(0.07f);
+            yield return new WaitForSeconds(0.2f);
             Destroy(gameObject);
         }
 

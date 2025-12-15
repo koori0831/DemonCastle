@@ -1,9 +1,5 @@
-﻿using UnityEngine;
-using Work.Characters.Code;
-using Work.Characters.FSM.Code;
+﻿using Work.Characters.Code;
 using Work.Entities;
-using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {

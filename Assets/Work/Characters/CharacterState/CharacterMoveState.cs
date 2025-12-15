@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using Work.Characters.Code;
-using Work.Characters.FSM.Code;
+using Work.Characters.Events;
 using Work.Entities;
-using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
@@ -14,9 +11,9 @@ namespace Work.Characters.CharacterState
         {
         }
 
-        protected override void MoveHandler(PlayerMoveEvent evt)
+        protected override void MoveHandler(CharacterMoveEvent evt)
         {
-            if(evt.MoveDirection == Vector3.zero)
+            if (evt.MoveDirection == Vector3.zero)
             {
                 _stateCompo.ChangeState("IDLE");
             }

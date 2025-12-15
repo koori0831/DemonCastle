@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Work.Characters.Events;
+using Work.Utils.EventBus;
 
 namespace Work.Joystick.Code
 {
@@ -9,18 +11,14 @@ namespace Work.Joystick.Code
         [SerializeField] private RectTransform joystickKnob;
         [SerializeField] private RectTransform joystickParantImage;
         [SerializeField] private float joystickRange = 50f;
-
-        public delegate void JoystickEvent(Vector3 prev, Vector3 current);
-        public event JoystickEvent OnMoveDirectionChangedEvent;
         private Vector2 _startPos;
-
         private Vector3 _movePos;
 
         public void OnPointerUp(PointerEventData eventData)
         {
             IsTouching = false;
             joystickParantImage.gameObject.SetActive(false);
-            OnMoveDirectionChangedEvent?.Invoke(_movePos, Vector3.zero);
+            Bus<CharacterMoveEvent>.Raise(new CharacterMoveEvent(Vector3.zero));
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -50,7 +48,7 @@ namespace Work.Joystick.Code
                 Vector3 dir = new Vector3(newPos.x, 0, newPos.y).normalized;
                 if (_movePos != dir)
                 {
-                    OnMoveDirectionChangedEvent?.Invoke(_movePos,dir);
+                    Bus<CharacterMoveEvent>.Raise(new CharacterMoveEvent(dir));
                     _movePos = dir;
                 }
             }

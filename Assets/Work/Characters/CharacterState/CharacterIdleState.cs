@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Work.Characters.Code;
+using Work.Characters.Events;
 using Work.Characters.FSM.Code;
 using Work.Entities;
 using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
@@ -15,7 +13,7 @@ namespace Work.Characters.CharacterState
         private StateCompo _stateCompo;
         private CharacterMovementCompo _movementCompo;
 
-        public CharacterIdleState(Entity entity,int animHash) : base(entity, animHash)
+        public CharacterIdleState(Entity entity, int animHash) : base(entity, animHash)
         {
             _character = entity as Character;
             _stateCompo = _character.GetCompo<StateCompo>();
@@ -27,16 +25,16 @@ namespace Work.Characters.CharacterState
             base.Enter();
             Debug.Log("Idle 진입");
             _movementCompo.SetCanMove(false);
-            Bus<PlayerMoveEvent>.Events += HandleMoveDirectionChanged;
+            Bus<CharacterMoveEvent>.Events += HandleMoveDirectionChanged;
         }
 
         public override void Exit()
         {
             base.Exit();
-            Bus<PlayerMoveEvent>.Events -= HandleMoveDirectionChanged;
+            Bus<CharacterMoveEvent>.Events -= HandleMoveDirectionChanged;
         }
 
-        private void HandleMoveDirectionChanged(PlayerMoveEvent evt)
+        private void HandleMoveDirectionChanged(CharacterMoveEvent evt)
         {
             if (evt.MoveDirection != Vector3.zero)
             {

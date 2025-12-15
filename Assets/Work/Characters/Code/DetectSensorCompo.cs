@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Work.Characters.Events;
 using Work.Combat;
 using Work.Entities;
 using Work.Entities.Code;
 using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.Code
 {
@@ -34,10 +34,10 @@ namespace Work.Characters.Code
             decal.SetRadiuse(_detectionRadius);
             decal.SetActiveDecal(true);
 
-            Bus<PlayerMoveEvent>.Events += HandleMoveEvent;
+            Bus<CharacterMoveEvent>.Events += HandleMoveEvent;
         }
 
-        private void HandleMoveEvent(PlayerMoveEvent evt)
+        private void HandleMoveEvent(CharacterMoveEvent evt)
         {
             SetTarget();
         }

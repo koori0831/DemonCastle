@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Work.Cameras.Code;
 using Work.Characters.Attacks.Code;
 using Work.Characters.Code;
 using Work.Combat;
@@ -11,11 +12,13 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
     {
         private GameObject _rockObject;
         private DetectSensorCompo _sensor;
+        private CameraHandlerCompo _cameraHandle;
 
         public LandWizardThirdAttack(Character character, AttackParameters parameters) : base(character, parameters)
         {
             parameters.GetValue("Rock",out _rockObject);
             _sensor = character.GetCompo<DetectSensorCompo>();
+            _cameraHandle = character.GetCompo<CameraHandlerCompo>();
         }
 
         public override void Attack()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Work.Cameras.Code;
 using Work.Characters.Attacks.Code;
 using Work.Characters.Code;
 using Work.Combat;
@@ -10,16 +11,19 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
     {
         private GameObject _sendBullet;
         private DetectSensorCompo _sensor;
+        private CameraHandlerCompo _cameraHandle;
 
         public LandWizardSecondAttack(Character character, AttackParameters parameters) : base(character, parameters)
         {
             _sensor = _owner.GetCompo<DetectSensorCompo>(true);
+            _cameraHandle = _owner.GetCompo<CameraHandlerCompo>();
             _sendBullet = parameters.GetObjectValue("Bullet");
         }
 
         public override void Attack()
         {
             int bulletCount = _params.GetIntValue("BulletCount");
+            _cameraHandle.GenerateImpulse("LandWizardSecondAttack");
 
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using Work.Characters.Code;
+﻿using Work.Characters.Code;
+using Work.Characters.Events;
 using Work.Characters.FSM.Code;
 using Work.Entities;
 using Work.Utils.EventBus;
-using Work.Utils.EventBus.Events;
 
 namespace Work.Characters.CharacterState
 {
@@ -30,23 +24,23 @@ namespace Work.Characters.CharacterState
         {
             base.Enter();
             _movementCompo.SetCanMove(true);
-            Bus<PlayerMoveEvent>.Events += HandleMoveDirectionChanged;
+            Bus<CharacterMoveEvent>.Events += HandleMoveDirectionChanged;
         }
 
         public override void Exit()
         {
             base.Exit();
-            Bus<PlayerMoveEvent>.Events -= HandleMoveDirectionChanged;
+            Bus<CharacterMoveEvent>.Events -= HandleMoveDirectionChanged;
             _movementCompo.SetCanMove(false);
         }
 
-        protected void HandleMoveDirectionChanged(PlayerMoveEvent evt)
+        protected void HandleMoveDirectionChanged(CharacterMoveEvent evt)
         {
             _movementCompo.SetDirection(evt.MoveDirection);
             MoveHandler(evt);
         }
 
-        protected virtual void MoveHandler(PlayerMoveEvent evt)
+        protected virtual void MoveHandler(CharacterMoveEvent evt)
         {
 
         }
