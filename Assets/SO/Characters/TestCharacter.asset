@@ -12,10 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791693503907d8f4ca76d15221057526, type: 3}
   m_Name: TestCharacter
   m_EditorClassIdentifier: Assembly-CSharp::Work.Characters.Code.CharacterDataSO
-  CharacterName: "\uD14C\uC2A4\uD2B8 \uCE90\uB9AD\uD130"
-  CharacterDescription: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE90\uB9AD\uD130 \uB370\uC774\uD130 "
+  <Name>k__BackingField: Land Wizard
+  <Description>k__BackingField: "\uB545\uC18D\uC131 \uB9C8\uBC95\uC0AC"
+  <AttackRange>k__BackingField: 5
+  <AttackRangeType>k__BackingField: 2
+  <AnimationData>k__BackingField:
+    AnimatorController: {fileID: 9100000, guid: f926e9f5e99ed4148a68a448e38053a8, type: 2}
+    visualPrefab: {fileID: 7555468985048366693, guid: 46b1d74ec2b22944bb2b0f6e68f9554e, type: 3}
   stats:
   - name: HP
     stat: {fileID: 11400000, guid: 122e3468ab5a7a74cb4ac27e0113d072, type: 2}
     isOverrid: 1
     overridValue: 25
+  - name: DEX
+    stat: {fileID: 11400000, guid: 0cd3c8a2a187a144485d6f5109d933bd, type: 2}
+    isOverrid: 1
+    overridValue: 20
+  <CharacterType>k__BackingField: 0
+  <stateSOs>k__BackingField:
+  - {fileID: 11400000, guid: 7984d751eebd9e545a712d05fcc0eac8, type: 2}
+  - {fileID: 11400000, guid: 6fcf96874b5799b4c97fa9724664cf78, type: 2}
+  - {fileID: 11400000, guid: 6186fe874c8c2f347b8f666e1b348632, type: 2}
+  - {fileID: 11400000, guid: ff4776fe2a74b9043bdc90a370371fe1, type: 2}
+  <attackDatas>k__BackingField:
+  - {fileID: 11400000, guid: 7fbf325d84defb3448c4b9923187b26f, type: 2}
+  - {fileID: 11400000, guid: dad309b793a75974aa14ac2b8630dc1e, type: 2}
+  - {fileID: 11400000, guid: d29fe3a2a3a20cb459da5705b7c2fb1b, type: 2}
+  <skillDatas>k__BackingField:
+  - {fileID: 11400000, guid: a004a4801b8cc6947b31893af0653653, type: 2}

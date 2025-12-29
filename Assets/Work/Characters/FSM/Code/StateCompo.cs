@@ -1,20 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using Work.Characters.Code;
 using Work.Entities;
 
 namespace Work.Characters.FSM.Code
 {
-    public class StateCompo : MonoBehaviour , IEntityComponent
+    public class StateCompo : MonoBehaviour, IEntityComponent
     {
+        #region Member
         public Entity Owner { get; protected set; }
+
+        private Character _character;
+        private StateMachine _stateMachine;
+        private bool _isCanChangeState = true;
+
+        #endregion
+
+        #region Initialize
 
         public void InitCompo(Entity entity)
         {
             Owner = entity;
+            _character = entity as Character;
+            _stateMachine = new StateMachine();
+            _stateMachine.Initialized(_character.CharacterData.stateSOs, entity);
         }
+
+        #endregion
+
+        #region Method
+
+        public void ChangeState(string newState, bool isForcing = false)
+        {
+            if (!_isCanChangeState) return;
+            _stateMachine.ChangeState(newState, isForcing);
+        }
+
+        public void SetCanStateChange(bool isCanChangeState = true)
+        {
+            _isCanChangeState = isCanChangeState;
+        }
+
+        #endregion
+
+        #region Debug Method
+
+        [ContextMenu("Show All State")]
+        public void DebugShowAllState()
+        {
+            _stateMachine.DebugAllStateCheck();
+        }
+        #endregion
+
+        #region Unity Built-In Func
+
+        private void Update()
+        {
+            _stateMachine.Update();
+        }
+
+        #endregion
     }
 }

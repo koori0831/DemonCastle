@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb785216a7875749a829ab4293f4c39, type: 3}
   m_Name: HP Stat value data
   m_EditorClassIdentifier: Assembly-CSharp::Work.Characters.Stats.Code.StatValueSO
-  statName: HP
-  statDescription: "\uCCB4\uB825"
+  statName: DEX
+  statDescription: "\uBBFC\uCCA9"
   statIcon: {fileID: 0}
-  baseValue: 5
-  maxValue: 99999
-  minValue: 1
+  baseValue: 20
+  maxValue: 100
+  minValue: 5

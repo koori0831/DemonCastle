@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Work.Characters.FSM.Code
 {
-    [CreateAssetMenu(fileName = "StateData", menuName = "Characters/FSM/StateData")]
+    [CreateAssetMenu(fileName = "StateData", menuName = "SO/Characters/FSM/StateData", order = -1)]
     public class StateSO : ScriptableObject
     {
         public string stateName;
