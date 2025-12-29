@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Work.Characters.Code;
 using Work.Characters.Stats.Code;
 using Work.Inputs;
 
 namespace Work.Characters
 {
-    public class CharacterDataContainer : MonoBehaviour //´Ù¸¥ °÷¿¡¼­ ÇÃ·¹ÀÌ¾îÀÇ µ¥ÀÌÅÍ°¡ ÇÊ¿äÇÒ¶§ ÇÃ·¹ÀÌ¾î¸¦ Á÷Á¢ÀûÀ¸·Î ÂüÁ¶ÇÏ´Â°ÍÀÌ ¾Æ´Ï¶ó ÀÌ°÷¿¡¼­ µ¥ÀÌÅÍ¸¸ °¡Áö°í °£´Ù.
+    public class CharacterDataContainer : MonoBehaviour //ë‹¤ë¥¸ ê³³ì—ì„œ í”Œë ˆì´ì–´ì˜ ë°ì´í„°ê°€ í•„ìš”í• ë•Œ í”Œë ˆì´ì–´ë¥¼ ì§ì ‘ì ìœ¼ë¡œ ì°¸ì¡°í•˜ëŠ”ê²ƒì´ ì•„ë‹ˆë¼ ì´ê³³ì—ì„œ ë°ì´í„°ë§Œ ê°€ì§€ê³  ê°„ë‹¤.
     {
         public Character CurrentCharacter { get; private set; }
         public Character characterPrefab;
@@ -13,15 +13,15 @@ namespace Work.Characters
         public StatContainer CurrentCharacterStats => CurrentCharacter != null ? CurrentCharacter.StatContainer : null;
         public Vector3 MoveDirection { get; private set; }
 
-        private InputContainer _inputContainer;
+        public InputContainer InputContainer { get; private set; }
 
         private void Awake()
         {
-            _inputContainer = new InputContainer();
-            _inputContainer.Init();
+            InputContainer = new InputContainer();
+            InputContainer.Init();
         }
 
-        public void SetCharacterData(CharacterDataSO characterData) //Å¾¿¡ µé¾î°¡±â Àü¿¡¸¸ È£ÃâµÉ°Å´Ï±î ¹¹ ÇÒÇÊ¿ä ¾ø°ÚÁö..?
+        public void SetCharacterData(CharacterDataSO characterData) //íƒ‘ì— ë“¤ì–´ê°€ê¸° ì „ì—ë§Œ í˜¸ì¶œë ê±°ë‹ˆê¹Œ ë­ í• í•„ìš” ì—†ê² ì§€..?
         {
             CurrentCharacterData = characterData;
         }
