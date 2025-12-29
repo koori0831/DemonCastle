@@ -287,7 +287,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6076123492897655605, guid: 15f235ebfa7ab154ab6b946c19bbab51, type: 3}
+      propertyPath: m_FadeFactor
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076123492897655605, guid: 15f235ebfa7ab154ab6b946c19bbab51, type: 3}
+      propertyPath: m_RenderingLayerMask.m_Bits
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8158731636909166162, guid: 15f235ebfa7ab154ab6b946c19bbab51, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
