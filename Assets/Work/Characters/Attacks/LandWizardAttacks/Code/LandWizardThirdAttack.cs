@@ -23,6 +23,10 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public override void Attack()
         {
+            Debug.Assert(_sensor.CurrentTarget != null, "Target null");
+            if (_sensor.CurrentTarget.Transform.position == null)
+                return;
+
             _params.GetValue("PositionOffset",out Vector3 offset);
             offset.z = Vector3.Distance(_owner.transform.position, _sensor.CurrentTarget.Transform.position);
             Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;

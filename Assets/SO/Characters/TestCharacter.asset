@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Work.Characters.Code.CharacterDataSO
   <Name>k__BackingField: Land Wizard
   <Description>k__BackingField: "\uB545\uC18D\uC131 \uB9C8\uBC95\uC0AC"
-  <AttackRange>k__BackingField: 5
+  <AttackRange>k__BackingField: 9
   <AttackRangeType>k__BackingField: 2
   <AnimationData>k__BackingField:
     AnimatorController: {fileID: 9100000, guid: f926e9f5e99ed4148a68a448e38053a8, type: 2}

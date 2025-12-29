@@ -1,19 +1,30 @@
+﻿using Blade.Managers;
 using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Work.Characters.Code.Test
 {
+    [DefaultExecutionOrder(-2)]
     public class CharacterDataInjecter : MonoBehaviour
     {
         [SerializeField] private CharacterDataSO characterDataSO;
         [SerializeField] private CharacterDataContainer characterDataContainer;
         [SerializeField] private GameObject characterPrefab;
         [SerializeField] private CinemachineCamera playerFollowCam;
+        [SerializeField] private PlayerManager playerManager;
 
-        public void Start()
+        
+
+        private void Awake()
         {
             TestFunc();
             CharacterCreateTestFunc();
+            
+        }
+
+        public void Start()
+        {
+            
         }
 
         [ContextMenu("Test Character Data Set")]
@@ -28,7 +39,10 @@ namespace Work.Characters.Code.Test
             Character character = Instantiate(characterPrefab).GetComponent<Character>();
             character.Init(characterDataSO);
 
+
             playerFollowCam.Target.TrackingTarget = character.transform;
+
+            playerManager._player = character;
         }
     }
 }
