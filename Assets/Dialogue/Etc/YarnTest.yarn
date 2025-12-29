@@ -1,0 +1,145 @@
+﻿title: TestStart
+---
+
+<<declare $dice_original = 0>>
+<<declare $dice_final = 0>>
+<<declare $dice_isDouble = false>>
+<<declare $dice_result = 0>>
+
+<<declare $success_count = 0>>
+<<declare $failure_count = 0>>
+<<declare $test_round = 0>>
+<<declare $loop_index = 0>>
+
+Yarn 기반 TRPG 다이얼로그 시스템 테스트를 시작합니다.
+
+이 스크립트는 주사위 판정 UI, 리롤 흐름, 분기, 변수 업데이트를 한 번에 검증하기 위한 용도입니다.
+
+준비가 되었다면, 간단한 소개를 마치고 테스트로 넘어가겠습니다.
+
+<<jump TestIntro>>
+
+===
+
+title: TestIntro
+---
+
+먼저, 기본적인 힘 판정부터 시작해봅시다.
+
+<<jump BasicCheck>>
+
+===
+
+title: BasicCheck
+---
+
+<<set $test_round += 1>>
+
+[라운드 {$test_round}] 힘(STR) 55로 기본 판정을 수행합니다.
+
+주사위 UI가 뜨고, 확정이 제대로 동작하는지 확인해 주세요.
+
+<<RollCheckUI 55>>
+
+판정이 완료되었습니다. 결과를 확인해 봅시다.
+
+원본 주사위: {$dice_original}, 최종 주사위: {$dice_final}, 더블 여부: {$dice_isDouble}
+
+<<if $dice_result == 0>>
+    결과: 대성공입니다!
+    <<set $success_count += 1>>
+<<elseif $dice_result == 1>>
+    결과: 성공입니다.
+    <<set $success_count += 1>>
+<<elseif $dice_result == 2>>
+    결과: 실패입니다.
+    <<set $failure_count += 1>>
+<<else>>
+    결과: 대실패입니다!
+    <<set $failure_count += 1>>
+<<endif>>
+
+지금까지 성공: {$success_count}, 실패: {$failure_count}
+
+이번에는 좀 더 어려운 판정을 해보겠습니다.
+
+<<jump HardCheck>>
+
+===
+
+title: HardCheck
+---
+
+<<set $test_round += 1>>
+
+[라운드 {$test_round}] 난이도 높은 판정을 수행합니다. (DEX 35)
+
+<<RollCheckUI 35>>
+
+RollCheckUI 35 명령이 끝났고, 다시 결과를 확인합니다.
+
+최종 주사위: {$dice_final}, 결과 코드: {$dice_result}
+
+<<if $dice_isDouble>>
+    더블이 발생했습니다! 더블 처리 로직이 의도대로 동작하는지 확인하세요.
+<<endif>>
+
+<<if $dice_result == 0>>
+    대성공! 어려운 판정을 멋지게 통과했습니다.
+    <<set $success_count += 1>>
+<<elseif $dice_result == 1>>
+    성공! 간신히 통과했습니다.
+    <<set $success_count += 1>>
+<<elseif $dice_result == 2>>
+    실패… 조건을 만족하지 못했습니다.
+    <<set $failure_count += 1>>
+<<else>>
+    대실패! 치명적인 상황이 발생했습니다.
+    <<set $failure_count += 1>>
+<<endif>>
+
+현재까지 누적 성공: {$success_count}, 누적 실패: {$failure_count}
+
+<<jump Summary>>
+
+===
+
+title: Summary
+position: -147,221
+---
+
+이제 테스트를 마무리하면서 요약을 보여줍니다.
+
+전체 테스트 라운드 수: {$test_round}
+누적 성공 횟수: {$success_count}
+누적 실패 횟수: {$failure_count}
+
+<<if $success_count > $failure_count>>
+    성공이 실패보다 많습니다. 전반적으로 플레이어가 유리한 밸런스일 수 있습니다.
+<<elseif $success_count == $failure_count>>
+    성공과 실패가 비슷한 빈도로 발생했습니다. 비교적 균형 잡힌 느낌입니다.
+<<else>>
+    실패가 더 많이 발생했습니다. 난이도가 다소 높은 편일 수 있습니다.
+<<endif>>
+
+이 스크립트는 다음 요소들을 검증합니다:
+- RollCheckUI 명령과 UI 연동
+- 주사위 결과 변수 매핑: $dice_original, $dice_final, $dice_isDouble, $dice_result
+- if/elseif/else 분기
+- set/declare를 이용한 누적 변수 관리
+
+만약 여기까지 오류 없이 진행되었다면, Yarn 기반 TRPG 다이얼로그 시스템의 기본 기능은 정상 동작하고 있을 가능성이 높습니다.
+
+테스트를 종료합니다. 수고하셨습니다.
+
+<<jump TestEnd>>
+
+===
+
+title: TestEnd
+position: 362,198
+---
+
+끝.
+
+===

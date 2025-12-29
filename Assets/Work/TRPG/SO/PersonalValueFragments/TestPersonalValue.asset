@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8aa5076003d1b446a65e39b2531b705, type: 3}
   m_Name: TestPersonalValue
-  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Code.PersonalValueFragment
+  m_EditorClassIdentifier: Assembly-CSharp::Work.TRPG.Fragment.PersonalValueFragment
   fragmentName: 
   description: 
   icon: {fileID: 0}
