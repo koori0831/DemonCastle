@@ -13,26 +13,26 @@ namespace Work.Characters.Stats.Code.Test
         private void Start()
         {
             chareacterDataContainer.SetCharacterData(characterData);
-            chareacterDataContainer.CharacterStatContainer.AddListenerValueChangedEvent(Handler, statName);
+            chareacterDataContainer.CurrentCharacter.StatContainer.AddListenerValueChangedEvent(Handler, statName);
             Debug.Log($"Ω∫≈» : {statName}");
         }
 
         [ContextMenu("AddTest")]
         public void AddTest()
         {
-            chareacterDataContainer.CharacterStatContainer.AddModifier(statName, this, addValue);
+            chareacterDataContainer.CurrentCharacter.StatContainer.AddModifier(statName, this, addValue);
         }
 
         [ContextMenu("RemoveTest")]
         public void RemoveTest()
         {
-            chareacterDataContainer.CharacterStatContainer.RemoveModifier(statName, this);
+            chareacterDataContainer.CurrentCharacter.StatContainer.RemoveModifier(statName, this);
         }
 
         [ContextMenu("GetTest")]
         public void GetTest()
         {
-            Debug.Log(chareacterDataContainer.CharacterStatContainer.GetStatValue(statName));
+            Debug.Log(chareacterDataContainer.CurrentCharacter.StatContainer.GetStatValue(statName));
         }
 
         private void Handler(float prev, float change)

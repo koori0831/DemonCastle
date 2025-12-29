@@ -11,14 +11,14 @@ namespace Work.Characters.Stats.Code
         [SerializeField] private bool isOverrid;
         [SerializeField] private float overridValue;
 
-        public CharacterStat CreateStat()
+        public Stat CreateStat()
         {
             StatContext context;
             if (isOverrid)
                 context = this.stat.GenerateStatContext(overridValue);
             else
                 context = this.stat.GenerateStatContext();
-            CharacterStat stat = new CharacterStat(context);
+            Stat stat = new Stat(context);
 
             return stat;
         }

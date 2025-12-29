@@ -21,7 +21,7 @@ namespace Work.Characters.Code
         None = -1
     }
 
-    public enum CharacterAttackTypeEnum
+    public enum AttackTypeEnum
     {
         Melee,
         Magic,
