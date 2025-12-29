@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Work.Combat.AttackDatas
 {
 
-    public class LandWizardAttackData : AbstractAttackDataSO
+    public class LandWizardAttackData : AttackDataSO
     {
 
     }

@@ -14,7 +14,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
         private DetectSensorCompo _sensor;
         private CameraHandlerCompo _cameraHandle;
 
-        public LandWizardThirdAttack(Character character, AttackParameters parameters) : base(character, parameters)
+        public LandWizardThirdAttack(Character character, DataParams parameters) : base(character, parameters)
         {
             parameters.GetValue("Rock",out _rockObject);
             _sensor = character.GetCompo<DetectSensorCompo>();

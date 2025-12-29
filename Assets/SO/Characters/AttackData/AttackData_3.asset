@@ -12,25 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df50175b697b339488c026c1ab17887e, type: 3}
   m_Name: AttackData_3
   m_EditorClassIdentifier: Assembly-CSharp::Work.Combat.AttackDataSO
-  <AttackClassPath>k__BackingField: Work.Characters.Attacks.LandWizardAttacks.Code.LandWizardThirdAttack
-  <AttackName>k__BackingField: LandWizardThirdAttack
-  <AttackCount>k__BackingField: 2
-  <AttackDamage>k__BackingField: 5
-  <AttackParams>k__BackingField:
+  <Params>k__BackingField:
     RecallObjects:
     - name: Rock
       value: {fileID: 3682673079108518040, guid: f502b9b2c4ef0c749ac525d03b25c684, type: 3}
     Ints: []
     Floats:
-    - name: Radius
-      value: 5
-    - name: Damage
-      value: 5
     - name: Speed
-      value: 2
+      value: 12
+    - name: Radius
+      value: 6
+    - name: Damage
+      value: 6
     - name: MoveTime
-      value: 0.5
+      value: 0.45
     Vectors:
     - name: PositionOffset
-      value: {x: 0, y: 4, z: 0}
+      value: {x: 0, y: 8, z: 0}
     Effects: []
+  <AttackClassPath>k__BackingField: Work.Characters.Attacks.LandWizardAttacks.Code.LandWizardThirdAttack
+  <AttackName>k__BackingField: LandWizardThirdAttack
+  <AttackCount>k__BackingField: 2

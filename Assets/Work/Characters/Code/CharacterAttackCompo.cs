@@ -22,7 +22,7 @@ namespace Work.Characters.Code
         private Character _character;
         private StateCompo _stateCompo;
 
-        private AbstractAttackDataSO[] _attackDatas;
+        private AttackDataSO[] _attackDatas;
         private Dictionary<string, AbstractCharacterAttack> _attacks = new Dictionary<string, AbstractCharacterAttack>();
         public AbstractCharacterAttack CurrentAttack => _attacks[_attackDatas[CurrentAttackCount].AttackName];
 
@@ -49,11 +49,11 @@ namespace Work.Characters.Code
 
             _attackDatas = _character.CharacterData.attackDatas;
 
-            foreach (AbstractAttackDataSO item in _attackDatas)
+            foreach (AttackDataSO item in _attackDatas)
             {
                 Type type = Type.GetType(item.AttackClassPath);
                 Debug.Assert(type != null, $"Type '{item.AttackClassPath}' not found.");
-                AbstractCharacterAttack stateInstance = (AbstractCharacterAttack)Activator.CreateInstance(type, _character,item.AttackParams);
+                AbstractCharacterAttack stateInstance = (AbstractCharacterAttack)Activator.CreateInstance(type, _character,item.Params);
                 _attacks.Add(item.AttackName, stateInstance);
             }
 

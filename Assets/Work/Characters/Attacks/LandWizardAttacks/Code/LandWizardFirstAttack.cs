@@ -14,7 +14,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
         private DetectSensorCompo _sensor;
         private CameraHandlerCompo _cameraHandle;
 
-        public LandWizardFirstAttack(Character character, AttackParameters parameters) : base(character, parameters)
+        public LandWizardFirstAttack(Character character, DataParams parameters) : base(character, parameters)
         {
             parameters.GetValue("Bullet", out _sendBullet);
 

@@ -16,18 +16,21 @@ namespace Work.Characters.Code
 
         private Character _character;
         private DetectSensorCompo _sensor;
+        private CharacterAnimatorCompo _animator;
         private Rigidbody _rbCompo;
         private Vector3 _direction; //움직일 방향
         private float _c = 1f;
-        [SerializeField] private float _defaultSpeed = 5; //속도 -> 나중에 캐릭터 데이터에서 받아오도록 변경 필요
+        private bool _isDashing = false;
         
-
         public Entity Owner { get; private set; }
         public Transform TargetTransform => _sensor == null ? null : _sensor.CurrentTarget.Transform;
         public bool IsCanMove { get; set; } = true;
         public bool IsExistTarget => _sensor == null ? false : _sensor.IsExistTarget;
+        public bool IsCanDash =>  !_isDashing;
         public float CurrentSpeed { get; private set; }
         public float CurrentSpeedMultiplier { get; private set; } = 1f;
+
+        [SerializeField] private float _defaultSpeed = 5; //속도 -> 나중에 캐릭터 데이터에서 받아오도록 변경 필요
 
         #endregion
 
@@ -67,7 +70,7 @@ namespace Work.Characters.Code
 
         private void Rotate()
         {
-            if(IsExistTarget) //타겟이 존재할때
+            if(IsExistTarget && !_isDashing) //타겟이 존재할때
             {                
                 Vector3 dir = (TargetTransform.position - _character.transform.position).normalized;
                 dir.y = 0f;
@@ -86,9 +89,11 @@ namespace Work.Characters.Code
         private void Move()
         {
             Vector3 moveVector = _direction * CurrentSpeed * CurrentSpeedMultiplier;
+
+
             if (!IsCanMove)
             {
-                moveVector = Vector3.zero;
+                moveVector = Vector3.Lerp(_rbCompo.linearVelocity, Vector3.zero, Time.deltaTime * 10f); ; moveVector = Vector3.zero;
                 _rbCompo.freezeRotation = false;
             }
             else
@@ -96,9 +101,10 @@ namespace Work.Characters.Code
                 _rbCompo.freezeRotation = true;
             }
 
+            _rbCompo.linearVelocity = moveVector;
             //moveVector.y += -9.8f;
 
-            _rbCompo.linearVelocity = moveVector;
+
         }
 
         public void SetMultiplier(float value = 1f) => CurrentSpeedMultiplier = value;
@@ -106,6 +112,21 @@ namespace Work.Characters.Code
         private void HandleSpeedStatValueChangedEvent(float prevValue, float changeValue)
         {
             CurrentSpeed = _defaultSpeed *( changeValue / 20f) * _c;
+        }
+
+        public void Dash()
+        {
+            _isDashing = true;
+        }
+
+        public void SetDash(bool isValue)
+        {
+            _isDashing = isValue;
+        }
+
+        public void Set_C(float value)
+        {
+            _c = value;
         }
 
         #endregion 

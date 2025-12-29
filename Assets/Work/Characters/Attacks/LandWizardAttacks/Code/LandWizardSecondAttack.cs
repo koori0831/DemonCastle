@@ -13,7 +13,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
         private DetectSensorCompo _sensor;
         private CameraHandlerCompo _cameraHandle;
 
-        public LandWizardSecondAttack(Character character, AttackParameters parameters) : base(character, parameters)
+        public LandWizardSecondAttack(Character character, DataParams parameters) : base(character, parameters)
         {
             _sensor = _owner.GetCompo<DetectSensorCompo>(true);
             _cameraHandle = _owner.GetCompo<CameraHandlerCompo>();
@@ -22,6 +22,11 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public override void Attack()
         {
+            Debug.Assert(_sensor.CurrentTarget.Transform.position != null, "Target null");
+            if (_sensor.CurrentTarget.Transform.position == null)
+                return;
+
+
             int bulletCount = _params.GetIntValue("BulletCount");
             _cameraHandle.GenerateImpulse("LandWizardSecondAttack");
 

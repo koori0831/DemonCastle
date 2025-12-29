@@ -17,6 +17,7 @@ namespace Work.Characters.Code
         //스킬 , 고유경험등 이것저것 추가예정
         [field: SerializeField] public CharacterEnum CharacterType { get; private set; }
         [field: SerializeField] public List<StateSO> stateSOs { get; private set; }
-        [field: SerializeField] public AbstractAttackDataSO[] attackDatas { get; private set; } 
+        [field: SerializeField] public AttackDataSO[] attackDatas { get; private set; }
+        [field: SerializeField] public SkillData[] skillDatas { get; private set; }
     }
 }
