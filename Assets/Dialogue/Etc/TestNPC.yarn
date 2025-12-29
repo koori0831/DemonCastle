@@ -1,0 +1,12 @@
+﻿title: TestNPC
+---
+<<InputEnabled false>>
+시스템: 캐릭터 입력이 비활성화되었습니다.
+NPC: 안녕하세요, 모험가님! 오늘은 어떤 도움을 드릴까요?
+->"좋은 아침!"
+    NPC: 좋은 아침입니다! 오늘도 힘찬 하루 보내세요.
+    <<InputEnabled true>>
+->"자판기 좀 보여줘."
+    NPC: 물론이죠! 자판기는 저쪽에 있습니다.
+    <<jump VendingMachineEvent>>
+===

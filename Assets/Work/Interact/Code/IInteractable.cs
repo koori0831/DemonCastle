@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using Work.Entities;
+﻿using Work.Characters;
 
 namespace Work.Interact.Code
 {
     public interface IInteractable
     {
-        public void Interact(Entity interactor);
+        public void Interact();
+        public void SetInteractable(bool isInteractable);
     }
 }

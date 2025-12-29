@@ -44,4 +44,12 @@ namespace Work.Characters.Events
     {
 
     }
+    public struct CharacterInputEnableEvent : IEvent
+    {
+        public bool Enable { get; private set; }
+        public CharacterInputEnableEvent(bool enable)
+        {
+            Enable = enable;
+        }
+    }
 }
