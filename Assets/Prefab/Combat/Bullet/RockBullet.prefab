@@ -115,7 +115,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  destroyEffect: {fileID: 1535202860381686415, guid: a5df729ccdc6d964984ca7430fcd6036, type: 3}
+  destroyEffect: {fileID: 187467845208369321, guid: bd7ee0acb63482d4987738e98df7133a, type: 3}
   damageableLayer:
     serializedVersion: 2
     m_Bits: 512

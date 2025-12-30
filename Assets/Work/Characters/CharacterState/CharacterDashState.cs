@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Blade.SkillSystem;
+using UnityEngine;
 using Work.Characters.Code;
 using Work.Characters.Events;
 using Work.Entities;
@@ -8,19 +9,22 @@ namespace Work.Characters.CharacterState
     public class CharacterDashState : CharacterCanMoveState
     {
         private CharacterMovementCompo _mover;
-
+        private CharacterSkillCompo _skill;
         private const float DASH_DURATION = 0.75f;
         private float _dashTimer = 0f;
 
         public CharacterDashState(Entity entity, int animHash) : base(entity, animHash)
         {
             _mover = entity.GetCompo<CharacterMovementCompo>();
+            _skill = entity.GetCompo<CharacterSkillCompo>();
         }
+
 
         public override void Enter()
         {
             base.Enter();
             _stateCompo.SetCanStateChange(false);
+            _skill.UseSkill("Dash");
             _movementCompo.SetCanMove(false);
         }
 

@@ -57,7 +57,6 @@ namespace Work.Characters.Code
             {
                 Debug.Log("Dash");
                 _stateCompo.ChangeState("DASH", true);
-                skills["Dash"].UseSkill();
             }
         }
 
@@ -72,6 +71,12 @@ namespace Work.Characters.Code
         }
 
 
-
+        public void UseSkill(string skillName)
+        {
+            if(skills.TryGetValue(skillName, out var skill))
+            {
+                skill.UseSkill();
+            }
+        }    
     }
 }

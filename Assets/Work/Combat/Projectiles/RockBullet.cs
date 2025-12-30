@@ -28,7 +28,7 @@ namespace Work.Combat.Projectiles
                     Vector3 normal = transform.position - collision.collider.ClosestPoint(transform.position);
                     normal.x *= -1;
                     normal.z *= -1;
-                    damageable.TakeDamage(_owner, _damage, normal.normalized, true, 250);
+                    damageable.TakeDamage(_owner, _damage, normal.normalized, true, 500);
                 }
             }
 

@@ -1,16 +1,19 @@
 ﻿using Blade.Combat;
 using Blade.Entities;
+using Blade.UI;
 using System;
 using Unity.Behavior;
 using UnityEngine;
-using Work.Entities.Code;
+using Work.Combat;
 
 namespace Blade.Enemies
 {
     public abstract class Enemy : Entity, Work.Entities.Code.IDamageable
     {
-        [field:SerializeField] public EntityFinderSO PlayerFinder { get; private set; }
+        [field: SerializeField] public EntityFinderSO PlayerFinder { get; private set; }
         [SerializeField] private NavMovement controller;
+        [SerializeField] private DamageText damageTextPrefab;
+        [SerializeField] private TextInfoSO normalText;
 
         public BehaviorGraphAgent BTAgent { get; private set; }
 
@@ -26,7 +29,7 @@ namespace Blade.Enemies
 
         #endregion
 
-        
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
@@ -57,7 +60,7 @@ namespace Blade.Enemies
         public MovementDataSO data;
         public Rigidbody rbCompo;
 
-        public float health = 30;
+        public float health = 1000;
         private bool _isKnockback = false;
         private float _timer;
         private const float DELAY_TIME = 0.1f;
@@ -77,6 +80,9 @@ namespace Blade.Enemies
         public void TakeDamage(Work.Entities.Entity attacker, float damage, Vector3 normal, bool isKnockback = false, float knockbackPower = 0)
         {
             health -= damage;
+            DamageText damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
+            Vector3 pos = transform.position + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 2.5f, UnityEngine.Random.Range(-0.5f, 0.5f));
+            damageText.Init($"{damage}", normalText, pos, 1.2f);
 
             if (isKnockback && !_isKnockback)
             {
@@ -88,7 +94,9 @@ namespace Blade.Enemies
             {
                 IsDead = true;
                 OnDeadEvent?.Invoke(this);
-                Destroy(gameObject);
+                OnDieEvent?.Invoke();
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

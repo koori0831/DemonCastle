@@ -13,28 +13,19 @@ MonoBehaviour:
   m_Name: Movement data
   m_EditorClassIdentifier: Assembly-CSharp::Blade.Combat.MovementDataSO
   maxSpeed: 3
-  duration: 0.45
+  duration: 0.25
   moveCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 3.4831734
-      outSlope: 3.4831734
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.023696683
-    - serializedVersion: 3
-      time: 0.676221
-      value: 0.98861897
-      inSlope: 0.17731684
-      outSlope: 0.17731684
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.052107017
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
