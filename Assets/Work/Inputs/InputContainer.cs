@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using Work.Characters.Events;
 using Work.Utils.EventBus;
@@ -17,12 +17,22 @@ namespace Work.Inputs
                 _console.Player.SetCallbacks(this);
             }
             _console.Player.Enable();
+            Bus<CharacterInputEnableEvent>.Events += SetEnable;
         }
 
         ~InputContainer()
         {
             _console.Player.Disable();
             _console = null;
+            Bus<CharacterInputEnableEvent>.Events -= SetEnable;
+        }
+
+        public void SetEnable(CharacterInputEnableEvent evt)
+        {
+            if (evt.Enable)
+                _console.Player.Enable();
+            else
+                _console.Player.Disable();
         }
 
         public void OnDash(InputAction.CallbackContext context)

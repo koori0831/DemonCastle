@@ -14,6 +14,9 @@ namespace Work.TRPG.UI
         [SerializeField] private CanvasGroup root;
         [SerializeField] private TMP_Text firstDiceText;//10의 자리
         [SerializeField] private TMP_Text secondDiceText;//1의 자리
+        [SerializeField] private RectTransform arrow;
+        [SerializeField] private RectTransform targetArrow;
+        [SerializeField] private TMP_Text statText;
         [SerializeField] private TMP_Text resultText;
         [SerializeField] private Button confirmButton;
 
@@ -48,6 +51,15 @@ namespace Work.TRPG.UI
         {
             resultText.gameObject.SetActive(false);
             resultText.transform.localScale = Vector3.zero;
+            arrow.localRotation = Quaternion.Euler(0, 0, 90);
+        }
+
+        public void SetStatUI(int stat)
+        {
+            statText.text = stat.ToString();
+            // 화살표 위치 설정
+            float angle = 90 - (stat / 100f) * 180f;
+            targetArrow.localRotation = Quaternion.Euler(0, 0, angle);
         }
 
         public void SetResultUI(CheckInfo checkInfo)
@@ -68,6 +80,15 @@ namespace Work.TRPG.UI
             LMotion.Create(Vector3.zero, Vector3.one, rollDuration / 2)
                 .WithEase(Ease.OutBounce)
                 .BindToLocalScale(resultText.transform);
+            // 화살표 회전
+            // 90도는 0, -90도는 100
+            float angle = 90 - (checkInfo.finalDice / 100f) * 180f;
+            LMotion.Create(90f, angle, rollDuration)
+                .WithEase(Ease.OutCubic)
+                .Bind(value =>
+                {
+                    arrow.localRotation = Quaternion.Euler(0, 0, value);
+                });
         }
 
         public void PlayRollAnimation(System.Action onComplete)

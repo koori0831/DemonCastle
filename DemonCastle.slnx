@@ -1,6 +1,7 @@
 ﻿<Solution>
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="lilToon.Editor.csproj" />
   <Project Path="VHierarchy.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="lilToon.Editor.External.csproj" />
+  <Project Path="URPWizard.csproj" />
 </Solution>
