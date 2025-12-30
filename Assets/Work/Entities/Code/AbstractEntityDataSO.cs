@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using Work.Characters.Code;
 using Work.Characters.Stats.Code;
@@ -10,7 +9,7 @@ namespace Work.Entities.Code
     [Serializable]
     public class AnimationData
     {
-        public AnimatorController AnimatorController;
+        public RuntimeAnimatorController AnimatorController;
         public GameObject visualPrefab;
     }
 

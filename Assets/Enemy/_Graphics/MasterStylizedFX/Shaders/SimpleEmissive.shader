@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.3.2
+﻿// Made with Amplify Shader Editor v1.9.3.2
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "EmissiveParticle"
 {
@@ -479,7 +479,7 @@ Shader "EmissiveParticle"
 
 				#ifdef _WRITE_RENDERING_LAYERS
 					uint renderingLayers = GetMeshRenderingLayer();
-					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
+					outRenderingLayers = float4( EncodeMeshRenderingLayer( (float)renderingLayers ), 0, 0, 0 );
 				#endif
 
 				return half4( Color, Alpha );
@@ -1827,7 +1827,7 @@ Shader "EmissiveParticle"
 
 				#ifdef _WRITE_RENDERING_LAYERS
 					uint renderingLayers = GetMeshRenderingLayer();
-					outRenderingLayers = float4(EncodeMeshRenderingLayer(renderingLayers), 0, 0, 0);
+					outRenderingLayers = float4(EncodeMeshRenderingLayer((float)renderingLayers), 0, 0, 0);
 				#endif
 			}
 
