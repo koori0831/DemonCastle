@@ -9,6 +9,7 @@ namespace Work.TRPG
         public int finalDice;      // 보정된 주사위 값
         public CheckResult result; // 판정 결과
         public bool isDouble;      // 더블 발생 여부
+        public int stat;   // 목표 수치
     }
 
     public class TRPGDiceSystem
@@ -26,6 +27,8 @@ namespace Work.TRPG
             checkInfo.finalDice = checkInfo.originalDice;
 
             checkInfo.isDouble = (checkInfo.originalDice % 11 == 0);
+
+            checkInfo.stat = stat;
 
             bool isSuccess = (checkInfo.finalDice <= stat);
 

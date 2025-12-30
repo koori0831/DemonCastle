@@ -20,9 +20,10 @@
         {
             IsCompleted = false;
             _view.SetActive(true);
+            _model.Roll();
+            _view.SetStatUI(_model.Stat.Value);
             _view.PlayRollAnimation(() =>
             {
-                _model.Roll();
                 _view.SetResultUI(_model.CheckInfo.Value);
             });
         }
