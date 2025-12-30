@@ -22,8 +22,8 @@ MonoBehaviour:
     Floats:
     - name: BulletAngle
       value: 60
-    - name: BulletAngle
-      value: 60
+    - name: BulletDamage
+      value: 3
     - name: BulletSpeed
       value: 15
     Vectors:

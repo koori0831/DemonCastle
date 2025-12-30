@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7308e0bff02a4e7a923a467c11006a39, type: 3}
+  m_Name: MeleeDamage
+  m_EditorClassIdentifier: 
+  statName: MeleeDamage
+  description: "\uADFC\uC811\uACF5\uACA9\uB825"
+  icon: {fileID: 21300000, guid: 5df763bd21fa4464c8074af35226e643, type: 3}
+  displayName: DMG
+  incrementStep: 1.5
+  baseValue: 5
+  <MinValue>k__BackingField: 1
+  <MaxValue>k__BackingField: 99999
+  <IsPercent>k__BackingField: 0

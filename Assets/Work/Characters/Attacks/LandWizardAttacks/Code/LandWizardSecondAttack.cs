@@ -22,7 +22,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public override void Attack()
         {
-            Debug.Assert(_sensor.CurrentTarget.Transform.position != null, "Target null");
+            Debug.Assert(_sensor.CurrentTarget != null, "Target null");
             if (_sensor.CurrentTarget.Transform.position == null)
                 return;
 
@@ -39,7 +39,7 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
                 Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
 
                 SendBullet bullet = MonoBehaviour.Instantiate(_sendBullet, _owner.transform.position + calculateOffset, Quaternion.identity).GetComponent<SendBullet>();
-                Vector3 targetPos = _sensor.CurrentTarget.Transform.position;
+                Vector3 targetPos = _sensor.CurrentTarget.Transform.position + Vector3.up;
                 Vector3 dir = targetPos - bullet.transform.position;
                 Vector3 calDir = Quaternion.AngleAxis(oneAngle * i, Vector3.up) * dir;
                 bullet.SetCanMove(true);

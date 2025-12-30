@@ -10,6 +10,7 @@ namespace Work.Entities
     public class EntityAnimatorCompo : MonoBehaviour, IEntityComponent
     {
         [SerializeField] protected Animator animator;
+        public Animator Anim => animator;
         public Entity Owner { get; protected set; }
 
         public virtual void InitCompo(Entity entity)
