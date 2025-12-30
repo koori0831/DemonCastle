@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Work.Characters.FSM.Code;
-using Work.Characters.Stats.Code;
 using Work.Combat;
 using Work.Entities.Code;
 

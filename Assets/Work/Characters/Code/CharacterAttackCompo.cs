@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Work.Characters.Attacks.Code;
 using Work.Characters.FSM.Code;
 using Work.Combat;
 using Work.Entities;
 using Work.Entities.Code;
-using static UnityEditor.VersionControl.Asset;
 
 namespace Work.Characters.Code
 {
