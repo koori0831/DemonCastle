@@ -28,7 +28,7 @@ namespace Work.Combat.Projectiles
                     Vector3 normal = transform.position - collision.collider.ClosestPoint(transform.position);
                     normal.x *= -1;
                     normal.z *= -1;
-                    damageable.TakeDamage(_owner, _damage, normal.normalized, true, 250);
+                    damageable.TakeDamage(_owner, _damage, normal.normalized, true, 500);
                 }
             }
 
@@ -41,7 +41,7 @@ namespace Work.Combat.Projectiles
 
         public IEnumerator DeadProjectile()
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
 

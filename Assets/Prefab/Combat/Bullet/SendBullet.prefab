@@ -98,7 +98,7 @@ MonoBehaviour:
   rbCompo: {fileID: 1514969195553996547}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   destroyEffect: {fileID: 1535202860381686415, guid: a5df729ccdc6d964984ca7430fcd6036, type: 3}
 --- !u!1001 &4543541602746262842
 PrefabInstance:

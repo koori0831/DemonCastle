@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Work.Entities;
 
 namespace Work.Combat.Projectiles
@@ -54,12 +54,12 @@ namespace Work.Combat.Projectiles
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(collision.gameObject.layer + " : Collision Object Layer");
-            Debug.Log((collision.gameObject.layer & (1 << targetLayer)) != 0);
-            if ((collision.gameObject.layer & (1 << targetLayer)) != 0)
+            Debug.Log(collision.gameObject.layer + " : Collision Object Layer" + " : ObjectName : "+ name + $" : In layer : {(collision.gameObject.layer & (1 << targetLayer)) != 0}");
+            if ((1 << collision.gameObject.layer & targetLayer) != 0)
             {
                 Debug.Log("collisiont " + name);
                 OnCollisionAfter(collision);
+                _isCanMove = false;
             }
         }
 

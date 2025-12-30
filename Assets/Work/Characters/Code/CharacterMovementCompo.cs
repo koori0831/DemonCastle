@@ -44,6 +44,7 @@ namespace Work.Characters.Code
             _character = Owner as Character;
             _sensor = _character.GetCompo<DetectSensorCompo>();
             _rbCompo = _character.GetComponent<Rigidbody>();
+            _animator = _character.GetCompo<CharacterAnimatorCompo>();
 
             CurrentSpeed = _defaultSpeed *( Owner.StatContainer.GetStatValue("DEX") / 20f) * _c;
             Owner.StatContainer.AddListenerValueChangedEvent(HandleSpeedStatValueChangedEvent, "DEX");
@@ -66,12 +67,25 @@ namespace Work.Characters.Code
         #region Method
 
         public void SetCanMove(bool isCan) => IsCanMove = isCan;
-        public void SetDirection(Vector3 dir) => _direction = dir;
+        public void SetDirection(Vector3 dir)
+        {
+            _direction = dir;
+
+            Vector3 forward = Owner.Transform.forward;
+            Vector3 right = Owner.Transform.right;
+
+            float z = Vector3.Dot(Vector3.forward,_direction);
+            float x = Vector3.Dot(Vector3.right, _direction);
+
+
+            _animator.SetParam(Animator.StringToHash("MOVE_DIR_X"), _direction.x);
+            _animator.SetParam(Animator.StringToHash("MOVE_DIR_Z"), _direction.z);
+        }
 
         private void Rotate()
         {
-            if(IsExistTarget && !_isDashing) //타겟이 존재할때
-            {                
+            if (IsExistTarget && !_isDashing) //타겟이 존재할때
+            {
                 Vector3 dir = (TargetTransform.position - _character.transform.position).normalized;
                 dir.y = 0f;
                 if (dir == Vector3.zero) return;
@@ -88,26 +102,30 @@ namespace Work.Characters.Code
 
         private void Move()
         {
-            Vector3 moveVector = _direction * CurrentSpeed * CurrentSpeedMultiplier;
+            //Vector3 moveVector = _direction * CurrentSpeed * CurrentSpeedMultiplier;
 
 
-            if (!IsCanMove)
-            {
-                moveVector = Vector3.Lerp(_rbCompo.linearVelocity, Vector3.zero, Time.deltaTime * 10f); ; moveVector = Vector3.zero;
-                _rbCompo.freezeRotation = false;
-            }
-            else
-            {
-                _rbCompo.freezeRotation = true;
-            }
+            //if (!IsCanMove)
+            //{
+            //    moveVector = Vector3.Lerp(_rbCompo.linearVelocity, Vector3.zero, Time.deltaTime * 10f); ; moveVector = Vector3.zero;
+            //    _rbCompo.freezeRotation = false;
+            //}
+            //else
+            //{
+            //    _rbCompo.freezeRotation = true;
+            //}
 
-            _rbCompo.linearVelocity = moveVector;
-            //moveVector.y += -9.8f;
+            //_rbCompo.linearVelocity = moveVector;
+            ////moveVector.y += -9.8f;
 
 
         }
 
-        public void SetMultiplier(float value = 1f) => CurrentSpeedMultiplier = value;
+        public void SetMultiplier(float value = 1f)
+        {
+            CurrentSpeedMultiplier = value;
+            _animator.SetParam(Animator.StringToHash("MOVE_SPEED"),CurrentSpeedMultiplier);
+        }
 
         private void HandleSpeedStatValueChangedEvent(float prevValue, float changeValue)
         {
