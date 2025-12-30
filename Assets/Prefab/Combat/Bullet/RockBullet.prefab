@@ -99,7 +99,7 @@ MonoBehaviour:
   rbCompo: {fileID: 4787629471393963901}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 2560
   OnTakeDown:
     m_PersistentCalls:
       m_Calls:
