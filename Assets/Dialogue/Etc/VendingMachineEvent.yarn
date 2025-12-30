@@ -8,7 +8,7 @@ position: 0,0
 // 선택지
 ->"음료수 뽑기"
     <<jump VendingMachine_Roll>>
-->"발로 차기"
+->"발로 차기(행운 판정(55))"
     <<jump VendingMachine_Kick>>
 ->"그만두기"
     자판기 앞에서 물러났다.
