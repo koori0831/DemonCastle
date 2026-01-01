@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using Blade.Combat;
 using Blade.Entities;
 using Blade.StatSystem;
-using DG.Tweening;
+using LitMotion;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -62,7 +62,7 @@ namespace Blade.Enemies
         private void OnDestroy()
         {
             _statCompo.UnSubscribeStat(moveSpeedStat, HandleMoveSpeedChange);
-            _entity.transform.DOKill(); //사망시 넉백중이던 doTween을 중지합니다.
+            //_entity.transform.DOKill(); //사망시 넉백중이던 Tween을 중지합니다.
         }
         
         public async void KnockBack(Vector3 direction, MovementDataSO kbMovement)
