@@ -1,7 +1,7 @@
-using Blade.Combat;
+﻿using Blade.Combat;
 using Blade.Effects;
 using Blade.Entities;
-using DG.Tweening;
+using LitMotion;
 using GondrLib.Dependencies;
 using GondrLib.ObjectPool.RunTime;
 using UnityEngine;
@@ -33,16 +33,24 @@ namespace Blade.Feedbacks
                 var slashEffect = _poolManager.Pop<PoolingEffect>(slashItem);
                 slashEffect.PlayVFX(actionData.HitPoint, Quaternion.identity);
                 
-                DOVirtual.DelayedCall(playDuration, () =>
+                /*DOVirtual.DelayedCall(playDuration, () =>
                 {
                     _poolManager.Push(slashEffect);
-                });
+                });*/
+                LMotion.Create(0f, 0f, 0f)
+                    .WithDelay(playDuration)
+                    .WithOnComplete(() => _poolManager.Push(slashEffect))
+                    .RunWithoutBinding();
             }
             
-            DOVirtual.DelayedCall(playDuration, () =>
+            /*DOVirtual.DelayedCall(playDuration, () =>
             {
                 _poolManager.Push(effect);
-            });
+            });*/
+            LMotion.Create(0f, 0f, 0f)
+                .WithDelay(playDuration)
+                .WithOnComplete(() => _poolManager.Push(effect))
+                .RunWithoutBinding();
         }
 
         public override void StopFeedback()
