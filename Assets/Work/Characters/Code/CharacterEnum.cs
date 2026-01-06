@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Work.Characters.Code
 {
@@ -31,21 +31,33 @@ namespace Work.Characters.Code
     public enum ChracterAttackRangeTypeEnum
     {
         /// <summary>
-        /// ±Ù°Å¸® °ø°Ý
+        /// ê·¼ê±°ë¦¬ ê³µê²©
         /// </summary>
         CloseRange,
         /// <summary>
-        /// Áß°Å¸® °ø°Ý
+        /// ì¤‘ê±°ë¦¬ ê³µê²©
         /// </summary>
         MiddleDistance,
         /// <summary>
-        /// Àå°Å¸® °ø°Ý
+        /// ìž¥ê±°ë¦¬ ê³µê²©
         /// </summary>
         LongDistance,
         /// <summary>
-        /// ÁßÀå°Å¸® °ø°Ý
+        /// ì¤‘ìž¥ê±°ë¦¬ ê³µê²©
         /// </summary>
         MidToLongDistance,
+        None = -1
+    }
+
+    public enum CharacterStatEnum
+    {
+        STR,
+        INT,
+        LUK,
+        DEF,
+        SAN,
+        CON,
+        DEX,
         None = -1
     }
 }
