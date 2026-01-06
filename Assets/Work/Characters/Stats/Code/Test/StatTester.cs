@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Work.Characters.Code;
 
 namespace Work.Characters.Stats.Code.Test
@@ -14,7 +14,7 @@ namespace Work.Characters.Stats.Code.Test
         {
             chareacterDataContainer.SetCharacterData(characterData);
             chareacterDataContainer.CurrentCharacter.StatContainer.AddListenerValueChangedEvent(Handler, statName);
-            Debug.Log($"½ºÅÈ : {statName}");
+            Debug.Log($"ìŠ¤íƒ¯ : {statName}");
         }
 
         [ContextMenu("AddTest")]
@@ -37,8 +37,8 @@ namespace Work.Characters.Stats.Code.Test
 
         private void Handler(float prev, float change)
         {
-            Debug.Log($"ÀÌÀü°ª : {prev}");
-            Debug.Log($"¹Ù²ï°ª : {change}");
+            Debug.Log($"ì´ì „ê°’ : {prev}");
+            Debug.Log($"ë°”ë€ê°’ : {change}");
         }
     }
 }
