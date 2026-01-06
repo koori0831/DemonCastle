@@ -12,6 +12,7 @@ namespace Work.Characters.Code
     public class CharacterDataSO : AbstractEntityDataSO
     {
         //스킬 , 고유경험등 이것저것 추가예정
+        [field: SerializeField] public int ClassID {  get; private set; }
         [field: SerializeField] public CharacterEnum CharacterType { get; private set; }
         [field: SerializeField] public List<StateSO> stateSOs { get; private set; }
         [field: SerializeField] public AttackDataSO[] attackDatas { get; private set; }
