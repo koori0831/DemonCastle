@@ -55,6 +55,7 @@ namespace Work.Characters.Code
                 _attacks.Add(item.AttackName, stateInstance);
             }
 
+            //이거 애니메이션 트리거에서 좌클릭으로 바꾸면 공격은 매끄럽게 나올듯 , + 일반공격 스크립트들에서 공격대상으로 Target 잡는거 따로 마우스 방향으로 바꿔야할듯
             _animTriggerCompo.OnAttackTriggerEvent += Attack;
         }
 

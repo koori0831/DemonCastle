@@ -7,7 +7,7 @@ namespace Work.Characters.Code.Test
     [DefaultExecutionOrder(-2)]
     public class CharacterDataInjecter : MonoBehaviour
     {
-        [SerializeField] private CharacterDataSO characterDataSO;
+        [SerializeField] private CharacterClassDataSO characterDataSO;
         [SerializeField] private CharacterDataContainer characterDataContainer;
         [SerializeField] private GameObject characterPrefab;
         [SerializeField] private CinemachineCamera playerFollowCam;

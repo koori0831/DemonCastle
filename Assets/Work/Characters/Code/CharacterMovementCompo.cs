@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 using Work.Entities;
 
 namespace Work.Characters.Code
@@ -21,12 +14,12 @@ namespace Work.Characters.Code
         private Vector3 _direction; //움직일 방향
         private float _c = 1f;
         private bool _isDashing = false;
-        
+
         public Entity Owner { get; private set; }
         public Transform TargetTransform => _sensor == null ? null : _sensor.CurrentTarget.Transform;
         public bool IsCanMove { get; set; } = true;
         public bool IsExistTarget => _sensor == null ? false : _sensor.IsExistTarget;
-        public bool IsCanDash =>  !_isDashing;
+        public bool IsCanDash => !_isDashing;
         public float CurrentSpeed { get; private set; }
         public float CurrentSpeedMultiplier { get; private set; } = 1f;
 
@@ -46,11 +39,11 @@ namespace Work.Characters.Code
             _rbCompo = _character.GetComponent<Rigidbody>();
             _animator = _character.GetCompo<CharacterAnimatorCompo>();
 
-            CurrentSpeed = _defaultSpeed *( Owner.StatContainer.GetStatValue("DEX") / 20f) * _c;
+            CurrentSpeed = _defaultSpeed * (Owner.StatContainer.GetStatValue("DEX") / 20f) * _c;
             Owner.StatContainer.AddListenerValueChangedEvent(HandleSpeedStatValueChangedEvent, "DEX");
         }
 
-      
+
 
         #endregion
 
@@ -60,7 +53,7 @@ namespace Work.Characters.Code
         {
             Move();
             Rotate();
-        } 
+        }
 
         #endregion
 
@@ -74,7 +67,7 @@ namespace Work.Characters.Code
             Vector3 forward = Owner.Transform.forward;
             Vector3 right = Owner.Transform.right;
 
-            float z = Vector3.Dot(Vector3.forward,_direction);
+            float z = Vector3.Dot(Vector3.forward, _direction);
             float x = Vector3.Dot(Vector3.right, _direction);
 
 
@@ -124,12 +117,12 @@ namespace Work.Characters.Code
         public void SetMultiplier(float value = 1f)
         {
             CurrentSpeedMultiplier = value;
-            _animator.SetParam(Animator.StringToHash("MOVE_SPEED"),CurrentSpeedMultiplier);
+            _animator.SetParam(Animator.StringToHash("MOVE_SPEED"), CurrentSpeedMultiplier);
         }
 
         private void HandleSpeedStatValueChangedEvent(float prevValue, float changeValue)
         {
-            CurrentSpeed = _defaultSpeed *( changeValue / 20f) * _c;
+            CurrentSpeed = _defaultSpeed * (changeValue / 20f) * _c;
         }
 
         public void Dash()
