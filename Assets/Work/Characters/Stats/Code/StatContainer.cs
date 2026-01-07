@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Work.Characters.Code;
+using Work.Combat;
 using Work.Entities.Code;
 
 namespace Work.Characters.Stats.Code
@@ -19,16 +20,18 @@ namespace Work.Characters.Stats.Code
         public void InitailizeStatContainer(AbstractEntityDataSO abstarectEntityData)
         {
             if (abstarectEntityData == null) return;
-            SetStatDict(abstarectEntityData);
+
+            if (abstarectEntityData is CombatEntityDataSO combatData)
+                SetStatDict(combatData);
         }
 
         #endregion
 
         #region Method
 
-        private void SetStatDict(AbstractEntityDataSO abstarectEntityData)
+        private void SetStatDict(CombatEntityDataSO combatEntityData)
         {
-            Dictionary<string, Stat> statDict = abstarectEntityData.GetDefaultStats();
+            Dictionary<string, Stat> statDict = combatEntityData.GetDefaultStats();
             if (statDict == null) return;
             stats = statDict;
         }

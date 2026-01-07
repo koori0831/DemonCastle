@@ -26,7 +26,6 @@ namespace Work.Characters.Code
         public void InitCompo(Entity entity)
         {
             Owner = entity;
-            _detectionRadius = Owner.EntityDataSO.AttackRange; //여기서 나중에는 실질적인 수치로 바꿔줘야함
 
             _area = GetComponent<SphereCollider>();
             _area.radius = _detectionRadius;

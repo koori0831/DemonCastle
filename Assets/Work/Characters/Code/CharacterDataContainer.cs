@@ -9,7 +9,7 @@ namespace Work.Characters
     {
         public Character CurrentCharacter { get; private set; }
         public Character characterPrefab;
-        public CharacterDataSO CurrentCharacterData { get; private set; }
+        public CharacterClassDataSO CurrentCharacterData { get; private set; }
         public StatContainer CurrentCharacterStats => CurrentCharacter != null ? CurrentCharacter.StatContainer : null;
         public Vector3 MoveDirection { get; private set; }
 
@@ -21,7 +21,7 @@ namespace Work.Characters
             InputContainer.Init();
         }
 
-        public void SetCharacterData(CharacterDataSO characterData) //탑에 들어가기 전에만 호출될거니까 뭐 할필요 없겠지..?
+        public void SetCharacterData(CharacterClassDataSO characterData) //탑에 들어가기 전에만 호출될거니까 뭐 할필요 없겠지..?
         {
             CurrentCharacterData = characterData;
         }
