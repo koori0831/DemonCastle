@@ -5,7 +5,7 @@ namespace Work.Characters.Stats.Code.Test
 {
     public class StatTester : MonoBehaviour, IStatUpgrader
     {
-        [SerializeField] private CharacterDataSO characterData;
+        [SerializeField] private CharacterClassDataSO characterData;
         [SerializeField] private string statName = "HP";
         [SerializeField] private float addValue = 10;
         [SerializeField] private CharacterDataContainer chareacterDataContainer;

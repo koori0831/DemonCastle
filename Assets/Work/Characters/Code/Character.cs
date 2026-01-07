@@ -7,6 +7,6 @@ namespace Work.Characters.Code
 {
     public class Character : Entity
     {
-        public CharacterDataSO CharacterData => EntityDataSO as CharacterDataSO;
+        public CharacterClassDataSO CharacterData => EntityDataSO as CharacterClassDataSO;
     }
 }
