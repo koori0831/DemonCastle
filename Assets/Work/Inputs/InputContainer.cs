@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 using Work.Characters.Events;
 using Work.Utils.EventBus;
+using Work.Utils.Helpers;
 
 namespace Work.Inputs
 {
@@ -71,5 +72,20 @@ namespace Work.Inputs
             if (context.performed)
                 Bus<CharacterSkillEvent>.Raise(new CharacterSkillEvent(2));
         }
+
+        public void OnLeftClick(InputAction.CallbackContext context)
+        {
+            ClickData clickData = new ClickData();
+        }
+
+        public void OnRightClick(InputAction.CallbackContext context)
+        {
+
+        }
+
+        //public ClickData GetHitPointToWorld()
+        //{
+        //    //Camera.main.ViewportToWorldPoint
+        //}
     }
 }

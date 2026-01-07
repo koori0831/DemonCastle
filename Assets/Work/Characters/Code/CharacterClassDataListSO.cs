@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Work.Characters.Code
 {
-    [CreateAssetMenu(fileName = "CharacterClassDataList" , menuName = "SO/Character/CharacterClassDataList")]
+    [CreateAssetMenu(fileName = "CharacterClassDataList" , menuName = "SO/Characters/CharacterClassDataList")]
     public class CharacterClassDataListSO : ScriptableObject
     {
         [field: SerializeField] public List<CharacterClassDataSO> characterDataSOs {  get; private set; }

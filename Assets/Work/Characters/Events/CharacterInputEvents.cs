@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using Work.Utils.EventBus;
+using Work.Utils.Helpers;
 
 namespace Work.Characters.Events
 {
@@ -22,7 +18,7 @@ namespace Work.Characters.Events
 
     public struct CharacterSkillEvent : IEvent
     {
-        public int skillNumber {  get; private set; }
+        public int skillNumber { get; private set; }
 
         public CharacterSkillEvent(int number)
         {
@@ -50,6 +46,16 @@ namespace Work.Characters.Events
         public CharacterInputEnableEvent(bool enable)
         {
             Enable = enable;
+        }
+    }
+
+    public struct MouseClickEvent
+    {
+        public ClickData ClickData { get; private set; }
+
+        public MouseClickEvent(ClickData clickData)
+        {
+            ClickData = clickData;
         }
     }
 }

@@ -24,18 +24,15 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public override void Attack()
         {
-            Debug.Assert(_sensor.CurrentTarget != null, "Target null");
-            if (_sensor.CurrentTarget == null)
-                return;
 
-            IDamageable target = _sensor.CurrentTarget;
+            Vector3 mousePos = Vector3.zero; //여기 마우스 포지션으로 바꿔야함
 
             _params.GetValue("PositionOffset", out Vector3 offset);
             _cameraHandle.GenerateImpulse("LandWizardFirstAttack");
             Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
 
             SendBullet bullet = MonoBehaviour.Instantiate(_sendBullet, _owner.transform.position + calculateOffset, Quaternion.identity).GetComponent<SendBullet>();
-            Vector3 targetPos = target.Transform.position + Vector3.up;
+            Vector3 targetPos = mousePos + Vector3.up;
             Vector3 dir = targetPos - bullet.transform.position;
             bullet.SetCanMove(true);
             bullet.SetDamage(_params.GetFloatValue("BulletDamage"));

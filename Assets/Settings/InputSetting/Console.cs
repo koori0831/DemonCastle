@@ -145,6 +145,24 @@ public partial class @Console: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""93cb72e8-46f8-4402-960d-4d15cb6bc305"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""0297e8e0-4f53-4f59-b7a0-6ce03afc0b1d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -299,6 +317,28 @@ public partial class @Console: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Gung"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a734a93d-21af-40af-becf-9e34bb211008"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dd0c12d-606d-4204-b1c9-4f03c92e2446"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -892,6 +932,8 @@ public partial class @Console: IInputActionCollection2, IDisposable
         m_Player_Skill_1 = m_Player.FindAction("Skill_1", throwIfNotFound: true);
         m_Player_Skill_2 = m_Player.FindAction("Skill_2", throwIfNotFound: true);
         m_Player_Gung = m_Player.FindAction("Gung", throwIfNotFound: true);
+        m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
+        m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -991,6 +1033,8 @@ public partial class @Console: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Skill_1;
     private readonly InputAction m_Player_Skill_2;
     private readonly InputAction m_Player_Gung;
+    private readonly InputAction m_Player_LeftClick;
+    private readonly InputAction m_Player_RightClick;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1026,6 +1070,14 @@ public partial class @Console: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Gung".
         /// </summary>
         public InputAction @Gung => m_Wrapper.m_Player_Gung;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/LeftClick".
+        /// </summary>
+        public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/RightClick".
+        /// </summary>
+        public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1070,6 +1122,12 @@ public partial class @Console: IInputActionCollection2, IDisposable
             @Gung.started += instance.OnGung;
             @Gung.performed += instance.OnGung;
             @Gung.canceled += instance.OnGung;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
         }
 
         /// <summary>
@@ -1099,6 +1157,12 @@ public partial class @Console: IInputActionCollection2, IDisposable
             @Gung.started -= instance.OnGung;
             @Gung.performed -= instance.OnGung;
             @Gung.canceled -= instance.OnGung;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
         }
 
         /// <summary>
@@ -1441,6 +1505,20 @@ public partial class @Console: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGung(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightClick(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
