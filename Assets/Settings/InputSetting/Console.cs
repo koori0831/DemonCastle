@@ -163,6 +163,15 @@ public partial class @Console: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""3132674b-6901-4570-b671-466171dd5658"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -339,6 +348,17 @@ public partial class @Console: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19ae8056-0305-4995-8722-3b1b86e70b0f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -934,6 +954,7 @@ public partial class @Console: IInputActionCollection2, IDisposable
         m_Player_Gung = m_Player.FindAction("Gung", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
+        m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1035,6 +1056,7 @@ public partial class @Console: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Gung;
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_RightClick;
+    private readonly InputAction m_Player_MousePos;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1078,6 +1100,10 @@ public partial class @Console: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/RightClick".
         /// </summary>
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MousePos".
+        /// </summary>
+        public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1128,6 +1154,9 @@ public partial class @Console: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @MousePos.started += instance.OnMousePos;
+            @MousePos.performed += instance.OnMousePos;
+            @MousePos.canceled += instance.OnMousePos;
         }
 
         /// <summary>
@@ -1163,6 +1192,9 @@ public partial class @Console: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @MousePos.started -= instance.OnMousePos;
+            @MousePos.performed -= instance.OnMousePos;
+            @MousePos.canceled -= instance.OnMousePos;
         }
 
         /// <summary>
@@ -1519,6 +1551,13 @@ public partial class @Console: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MousePos" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePos(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

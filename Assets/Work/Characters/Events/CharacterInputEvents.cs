@@ -49,7 +49,7 @@ namespace Work.Characters.Events
         }
     }
 
-    public struct MouseClickEvent
+    public struct MouseClickEvent : IEvent
     {
         public ClickData ClickData { get; private set; }
 

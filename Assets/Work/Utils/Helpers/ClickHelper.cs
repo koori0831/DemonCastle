@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Work.Characters.Events;
 using Work.Inputs;
+using Work.Utils.EventBus;
 
 namespace Work.Utils.Helpers
 {
@@ -13,21 +16,49 @@ namespace Work.Utils.Helpers
         public LayerMask Targetlayer { get; private set; }
         public MouseClickType ClickType { get; private set; }
 
-        public ClickData(RaycastHit hit, LayerMask targetLayer, MouseClickType clickType)
+        public ClickData(RaycastHit hit, MouseClickType clickType)
         {
+            
+            Debug.Assert(hit.collider != null, "Non-existent reference");
             Point = hit.point;
             Hit = hit;
-            Targetlayer = targetLayer;
+            Targetlayer = hit.collider.gameObject.layer;
             ClickType = clickType;
         }
     }
 
-    public class ClickHelper
+    
+    public class ClickHelper : IHelper
     {
         //클릭했을때 이벤트 받아서... 이거 어케 받지
-        public ClickHelper()
-        {
+        public static ClickData LastClickData { get; private set; }
+        public static Action OnAttackTriggerEvent;
 
+
+        private void HandleMouseClickEvent(MouseClickEvent evt)
+        {
+            Debug.Assert(evt.ClickData.Hit.collider != null , "ClickData is Non-existent");
+            LastClickData = evt.ClickData;
+
+            if(evt.ClickData.ClickType == MouseClickType.Left)
+            {
+                OnAttackTriggerEvent?.Invoke();
+            }
+            else if(evt.ClickData.ClickType == MouseClickType.Right)
+            {
+
+            }
+        }
+
+        public void Initialize()
+        {
+            Bus<MouseClickEvent>.Events += HandleMouseClickEvent;
+        }
+
+        public void Dispose()
+        {
+            Bus<MouseClickEvent>.Events -= HandleMouseClickEvent;
+            OnAttackTriggerEvent = null;
         }
     }
 }

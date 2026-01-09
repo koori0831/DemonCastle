@@ -5,6 +5,7 @@ using Work.Characters.Code;
 using Work.Combat;
 using Work.Combat.Projectiles;
 using Work.Entities.Code;
+using Work.Utils.Helpers;
 
 namespace Work.Characters.Attacks.LandWizardAttacks.Code
 {
@@ -24,15 +25,12 @@ namespace Work.Characters.Attacks.LandWizardAttacks.Code
 
         public override void Attack()
         {
-
-            Vector3 mousePos = Vector3.zero; //여기 마우스 포지션으로 바꿔야함
-
             _params.GetValue("PositionOffset", out Vector3 offset);
             _cameraHandle.GenerateImpulse("LandWizardFirstAttack");
             Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
 
             SendBullet bullet = MonoBehaviour.Instantiate(_sendBullet, _owner.transform.position + calculateOffset, Quaternion.identity).GetComponent<SendBullet>();
-            Vector3 targetPos = mousePos + Vector3.up;
+            Vector3 targetPos = ClickHelper.LastClickData.Point;
             Vector3 dir = targetPos - bullet.transform.position;
             bullet.SetCanMove(true);
             bullet.SetDamage(_params.GetFloatValue("BulletDamage"));

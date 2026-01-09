@@ -77,20 +77,10 @@ namespace Work.Characters.Code
 
         private void Rotate()
         {
-            if (IsExistTarget && !_isDashing) //타겟이 존재할때
-            {
-                Vector3 dir = (TargetTransform.position - _character.transform.position).normalized;
-                dir.y = 0f;
-                if (dir == Vector3.zero) return;
-                Quaternion lookRotation = Quaternion.LookRotation(dir);
-                _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
-            }
-            else //타겟이 없을때
-            {
-                if (_direction == Vector3.zero) return;
-                Quaternion lookRotation = Quaternion.LookRotation(_direction);
-                _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
-            }
+
+            if (_direction == Vector3.zero) return;
+            Quaternion lookRotation = Quaternion.LookRotation(_direction);
+            _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
         }
 
         private void Move()

@@ -5,15 +5,14 @@ using Work.Characters.Attacks.Code;
 using Work.Characters.FSM.Code;
 using Work.Combat;
 using Work.Entities;
-using Work.Entities.Code;
+using Work.Utils.Helpers;
 
 namespace Work.Characters.Code
 {
     public class CharacterAttackCompo : MonoBehaviour, IEntityComponent
     {
         public Entity Owner { get; private set; }
-        public bool IsCanAttack { get; private set; }
-        public bool IsSoptAttack { get; private set; } = false;
+        public bool IsCanAttack { get; private set; } = true;
         public bool isAttacking;
 
 
@@ -24,11 +23,9 @@ namespace Work.Characters.Code
         private Dictionary<string, AbstractCharacterAttack> _attacks = new Dictionary<string, AbstractCharacterAttack>();
         public AbstractCharacterAttack CurrentAttack => _attacks[_attackDatas[CurrentAttackCount].AttackName];
 
-        private DetectSensorCompo _sensorCompo;
         private CharacterAnimatorCompo _animatorCompo;
-        private CharacterAnimationTriggerCompo _animTriggerCompo;
 
-        private const float ATTACK_DELAY = 0.5f;
+        private const float COMBO_DELAY = 0.35f;
         private float timer;
 
         private int _currentAttackCount;
@@ -39,11 +36,8 @@ namespace Work.Characters.Code
         {
             Owner = entity;
             _character = Owner as Character;
-            _sensorCompo = _character.GetCompo<DetectSensorCompo>();
             _stateCompo = _character.GetCompo<StateCompo>();
             _animatorCompo = _character.GetCompo<CharacterAnimatorCompo>(true);
-            _animTriggerCompo = _character.GetCompo<CharacterAnimationTriggerCompo>(true);
-            _sensorCompo.OnTargetChangedEvent += HandleTargetChangeEvent;
 
             _attackDatas = _character.CharacterData.attackDatas;
 
@@ -51,35 +45,25 @@ namespace Work.Characters.Code
             {
                 Type type = Type.GetType(item.AttackClassPath);
                 Debug.Assert(type != null, $"Type '{item.AttackClassPath}' not found.");
-                AbstractCharacterAttack stateInstance = (AbstractCharacterAttack)Activator.CreateInstance(type, _character,item.Params);
+                AbstractCharacterAttack stateInstance = (AbstractCharacterAttack)Activator.CreateInstance(type, _character, item.Params);
                 _attacks.Add(item.AttackName, stateInstance);
             }
 
             //이거 애니메이션 트리거에서 좌클릭으로 바꾸면 공격은 매끄럽게 나올듯 , + 일반공격 스크립트들에서 공격대상으로 Target 잡는거 따로 마우스 방향으로 바꿔야할듯
-            _animTriggerCompo.OnAttackTriggerEvent += Attack;
+            ClickHelper.OnAttackTriggerEvent += Attack;
         }
 
         private void OnDestroy()
         {
-            _animTriggerCompo.OnAttackTriggerEvent -= Attack;
-        }
-
-        private void HandleTargetChangeEvent(IDamageable currentTarget, IDamageable prev)// 타겟이 바뀌면 알려주는 함수
-        {
-            IsCanAttack = currentTarget != null && currentTarget.Transform != null && currentTarget.Transform.gameObject != null;
-            _currentAttackCount = 0;
-            if (IsSoptAttack || !IsCanAttack)
-                _stateCompo.ChangeState("IDLE", false);
-            AttackStateChange();
+            ClickHelper.OnAttackTriggerEvent -= Attack;
         }
 
         public void AttackStateChange()
         {
-            if (IsCanAttack && !IsSoptAttack)
+            if (IsCanAttack)
             {
                 SetAttackComboAnim();
                 _stateCompo.ChangeState("ATTACK", true);
-                
             }
         }
 
@@ -90,24 +74,29 @@ namespace Work.Characters.Code
 
         public void Attack()
         {
+            //클릭했을때 바로 들어오는곳
+            if (isAttacking) { return; } //현재 공격중이라면 리턴
+            
+            if (timer >= COMBO_DELAY)
+            {
+                _currentAttackCount = 0;
+            }
+            
+            AttackStateChange();
             CurrentAttack.Attack();
         }
 
-        public void Update()
+        private void Update()
         {
             if (!isAttacking)
             {
                 timer += Time.deltaTime;
-
-                if (timer >= ATTACK_DELAY)
-                {
-                    AttackStateChange();
-                    timer = 0;
-                }
             }
+            else
+                timer = 0;
         }
 
-        public void StopAttack() => IsSoptAttack = true;
+        public void SetCanAttack() => IsCanAttack = true;
         public void SetAttackComboAnim() => _animatorCompo.SetParam(Animator.StringToHash("ATTACK_COUNT"), (float)_currentAttackCount);
     }
 }

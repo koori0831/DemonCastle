@@ -1,17 +1,22 @@
-﻿using UnityEngine;
-using Work.Characters.Code;
-using Work.Characters.Events;
+﻿using Work.Characters.Code;
+using Work.Characters.FSM.Code;
 using Work.Entities;
 
 namespace Work.Characters.CharacterState
 {
-    public class CharacterAttackState : CharacterCanMoveState
+    public class CharacterAttackState : State
     {
+        private Character _character;
+        private StateCompo _stateCompo;
         private CharacterAttackCompo _attackCompo;
+        private CharacterMovementCompo _movementCompo;
 
         public CharacterAttackState(Entity entity, int animHash) : base(entity, animHash)
         {
+            _character = entity as Character;
+            _stateCompo = _character.GetCompo<StateCompo>();
             _attackCompo = _character.GetCompo<CharacterAttackCompo>(true);
+            _movementCompo = _character.GetCompo<CharacterMovementCompo>();
         }
 
         public override void Enter()
@@ -38,19 +43,6 @@ namespace Work.Characters.CharacterState
             _attackCompo.AddAttackCount();
             _movementCompo.SetCanMove(false);
             _movementCompo.SetMultiplier(1);
-        }
-
-        protected override void MoveHandler(CharacterMoveEvent evt)
-        {
-            if(evt.MoveDirection == Vector3.zero)
-            {
-                _animator.Anim.SetLayerWeight(1, 0f);
-            }
-            else
-            {
-                _animator.Anim.SetLayerWeight(1, 1f);
-            }
-            
         }
     }
 }

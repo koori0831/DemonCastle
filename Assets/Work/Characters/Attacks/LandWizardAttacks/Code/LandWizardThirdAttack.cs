@@ -5,40 +5,24 @@ using Work.Characters.Attacks.Code;
 using Work.Characters.Code;
 using Work.Combat;
 using Work.Combat.Projectiles;
+using Work.Utils.Helpers;
 
 namespace Work.Characters.Attacks.LandWizardAttacks.Code
 {
     public class LandWizardThirdAttack : AbstractCharacterAttack
     {
         private GameObject _rockObject;
-        private DetectSensorCompo _sensor;
-        private CameraHandlerCompo _cameraHandle;
 
         public LandWizardThirdAttack(Character character, DataParams parameters) : base(character, parameters)
         {
             parameters.GetValue("Rock",out _rockObject);
-            _sensor = character.GetCompo<DetectSensorCompo>();
-            _cameraHandle = character.GetCompo<CameraHandlerCompo>();
         }
 
         public override void Attack()
         {
-            Debug.Assert(_sensor.CurrentTarget != null, "Target null");
-            if (_sensor.CurrentTarget.Transform.position == null)
-                return;
+            Vector3 targetPos = ClickHelper.LastClickData.Point;
 
-            //GameObject effectPrefab;
-            //_params.GetValue("EffectObject", out effectPrefab);
-            //Debug.Assert(effectPrefab != null , "Effect Object not find");
-            //if (effectPrefab == null)
-            //    return;
-
-            _params.GetValue("PositionOffset",out Vector3 offset);
-            offset.z = Vector3.Distance(_owner.transform.position, _sensor.CurrentTarget.Transform.position);
-            Vector3 calculateOffset = Quaternion.AngleAxis(_owner.transform.eulerAngles.y, Vector3.up) * offset;
-
-            RockBullet bullet = MonoBehaviour.Instantiate(_rockObject, _owner.transform.position + calculateOffset + new Vector3(Random.Range(-0.25f,0.25f),0, Random.Range(-0.25f, 0.25f)), Quaternion.identity).GetComponent<RockBullet>();
-            //GameObject effect = MonoBehaviour.Instantiate(effectPrefab, _sensor.CurrentTarget.Transform.position,Quaternion.identity);
+            RockBullet bullet = MonoBehaviour.Instantiate(_rockObject, targetPos + new Vector3(Random.Range(-0.25f,0.25f),5, Random.Range(-0.25f, 0.25f)), Quaternion.identity).GetComponent<RockBullet>();
 
             bullet.SetDirection(Vector3.down * _params.GetFloatValue("Speed"));
             bullet.SetRadius(_params.GetFloatValue("Radius"));

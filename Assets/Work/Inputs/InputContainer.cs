@@ -10,6 +10,8 @@ namespace Work.Inputs
     {
         private Console _console;
 
+        private Vector3 _mousePosition;
+
         public void Init()
         {
             if (_console == null)
@@ -58,7 +60,7 @@ namespace Work.Inputs
         {
             Vector2 vector = context.ReadValue<Vector2>();
 
-            Bus<CharacterMoveEvent>.Raise(new CharacterMoveEvent(new Vector3( vector.x,0, vector.y)));
+            Bus<CharacterMoveEvent>.Raise(new CharacterMoveEvent(new Vector3(vector.x, 0, vector.y)));
         }
 
         public void OnSkill_1(InputAction.CallbackContext context)
@@ -75,17 +77,48 @@ namespace Work.Inputs
 
         public void OnLeftClick(InputAction.CallbackContext context)
         {
-            ClickData clickData = new ClickData();
+            if (context.performed)
+                Bus<MouseClickEvent>.Raise(new MouseClickEvent(GetClickData(MouseClickType.Left)));
         }
 
         public void OnRightClick(InputAction.CallbackContext context)
         {
-
+            if (context.performed)
+                Bus<MouseClickEvent>.Raise(new MouseClickEvent(GetClickData(MouseClickType.Right)));
         }
 
-        //public ClickData GetHitPointToWorld()
-        //{
-        //    //Camera.main.ViewportToWorldPoint
-        //}
+        public void OnMousePos(InputAction.CallbackContext context)
+        {
+            _mousePosition = context.ReadValue<Vector2>();
+        }
+
+        public Vector3 GetHitPointToWorld()
+        {
+            Camera mainCam = Camera.main;
+            Ray cameraRay = mainCam.ScreenPointToRay(_mousePosition);
+            if (Physics.Raycast(cameraRay, out RaycastHit hit, mainCam.farClipPlane))
+            {
+                return hit.point;
+            }
+            return Vector3.zero;
+        }
+
+        public ClickData GetClickData(MouseClickType clickType)
+        {
+            RaycastHit hit = GetHit();
+
+            ClickData clickData = new ClickData(hit, clickType);
+            return clickData;
+        }
+
+        private RaycastHit GetHit()
+        {
+            Camera mainCam = Camera.main;
+            Ray cameraRay = mainCam.ScreenPointToRay(_mousePosition);
+            Physics.Raycast(cameraRay, out RaycastHit hit, mainCam.farClipPlane);
+            return hit;
+        }
+
+
     }
 }
